@@ -1,4 +1,19 @@
+using Ecommerce.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+var strConection = builder.Configuration.GetConnectionString("CadenaSql").ToString();
+
+builder.Services.AddDbContext<EcommerceContext>(options => options.UseSqlServer(strConection));
+
+
+
+
+
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

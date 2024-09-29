@@ -11,17 +11,40 @@ namespace Ecommerce.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            Inicializer();
         }
 
+        private void Inicializer()
+        {
+            ViewBag.Index = "";
+            ViewBag.Productos = "";
+            ViewBag.Contacto = "";
+            ViewBag.About= "";
+        }
         public IActionResult Index()
         {
+            ViewBag.Index = "active";
+            return View();
+        }
+        public IActionResult Productos()
+        {
+            ViewBag.Productos = "active";
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
         {
+            ViewBag.About = "active";
             return View();
         }
+        public IActionResult Contacto()
+        {
+            ViewBag.Contacto = "active";
+            return View();
+        }
+
+
+    
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

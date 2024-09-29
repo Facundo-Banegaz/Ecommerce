@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ecommerce.Models
 {
     public class Producto
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Display(Name = "Nombre:")]
         [Required(ErrorMessage = "Por favor ingresar el nombre del Producto:")]
@@ -20,25 +21,21 @@ namespace Ecommerce.Models
         [DataType(DataType.Currency)]
         [Display(Name = "Precio:")]
         public double Precio { get; set; }
-
-
-        public int ProductoImagenId { get; set; }
-
-        [Required(ErrorMessage = "Por favor selecciona una imagen.")]
-        [Display(Name = "Imagen")]
-        public ProductoImagen ProductoImagen { get; set; }
-
-
-        public int CategoriaId { get; set; }
+        
 
         [Required(ErrorMessage = "Por favor seleccionar una Categoría")]
         public virtual Categoria Categoria { get; set; }
 
+
         [Required(ErrorMessage = "Por favor seleccionar el Estado")]
         public bool Estatus {  get; set; }
+
 
         [Display(Name = "Cantidad:")]
         [Required(ErrorMessage = "Por favor ingresar el Cantidad del Producto :")]
         public int Cantidad {  get; set; }
+
+
+        public ICollection<ProductoImagen>? ProductoImagens { get; set; }
     }
 }

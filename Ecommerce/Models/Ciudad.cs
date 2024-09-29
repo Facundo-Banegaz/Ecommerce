@@ -2,13 +2,13 @@
 
 namespace Ecommerce.Models
 {
-    public class Categoria
+    public class Ciudad
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Nombre:")]
-        [Required(ErrorMessage = "Por favor ingresar el Nombre de la Categoria:")]
+        [Required(ErrorMessage = "Por favor ingresar el Nombre de la Ciudad:")]
         [StringLength(150, MinimumLength = 4)]
         public string Nombre { get; set; }
 
@@ -16,8 +16,6 @@ namespace Ecommerce.Models
         [Required(ErrorMessage = "Por favor selecciona una imagen.")]
         [Display(Name = "Imagen")]
         public string Imagen { get; set; }
-
-        public ICollection<Producto>? Productos { get; set; }
-
+        public ICollection<Cliente>? Clientes  { get; set; }
     }
 }
