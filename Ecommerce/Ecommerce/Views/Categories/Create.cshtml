@@ -1,0 +1,33 @@
+﻿@model Ecommerce.Data.Entities.Category
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear ua Nueva Categoría</h1>
+
+<h4>Pais</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <partial name="_Category" />
+
+            <div class="form-group mt-2">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

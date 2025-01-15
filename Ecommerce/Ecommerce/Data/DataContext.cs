@@ -12,6 +12,9 @@ namespace Ecommerce.Data
 
         public DbSet<Country> Countries { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -19,6 +22,8 @@ namespace Ecommerce.Data
 
 
             modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
+
+            modelBuilder.Entity<Category>().HasIndex(c =>c.Name).IsUnique();
 
         }
 
