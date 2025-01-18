@@ -9,6 +9,10 @@ var strConection = builder.Configuration.GetConnectionString("CadenaSql").ToStri
 
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(strConection));
 
+
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

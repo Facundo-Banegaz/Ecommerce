@@ -12,6 +12,10 @@ namespace Ecommerce.Data.Entities
         
         public string Name { get; set; }
 
+        public ICollection<State> States { get; set; }
+
+        [Display(Name = "Provincias")]
+        public int StatesNumber => States == null ? 0 : States.Count;
 
 
     }
