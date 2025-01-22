@@ -14,7 +14,9 @@ namespace Ecommerce.Data
 
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<State> States { get; set; }
 
+        public DbSet<City> Cities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
