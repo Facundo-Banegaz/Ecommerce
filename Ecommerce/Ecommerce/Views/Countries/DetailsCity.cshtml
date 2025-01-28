@@ -1,0 +1,14 @@
+﻿@model Ecommerce.Data.Entities.City
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalles</h1>
+
+<partial name="_CityDetails" />
+
+<div>
+    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model?.Id">Editar</a> 
+    <a asp-action="DetailsState" class="btn btn-success" asp-route-id="@Model?.State.Id">Volver</a>
+</div>

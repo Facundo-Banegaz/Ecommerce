@@ -1,0 +1,34 @@
+﻿@model Ecommerce.Models.CityViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear una Nueva Ciudad</h1>
+
+<h4>Pais</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddCity">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="StateId" />
+            <partial name="_City" />
+
+            <div class="form-group mt-2">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="DetailsState" asp-route-id="@Model.StateId">Volver</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

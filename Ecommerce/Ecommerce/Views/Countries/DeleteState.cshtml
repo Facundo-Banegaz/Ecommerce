@@ -1,0 +1,21 @@
+﻿@model Ecommerce.Data.Entities.State
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Eliminar</h1>
+
+<h3>¿Estás segura de que quieres eliminar esto?</h3>
+
+
+<partial name="_StateDetails" />
+
+<div>
+
+    <form asp-action="DeleteState">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="details"  asp-route-id="@Model?.Country.Id">Volver</a>
+    </form>
+</div>
