@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Ecommerce.Data;
 using Ecommerce.Data.Entities;
 using Ecommerce.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ecommerce.Controllers
 {
+   [Authorize(Roles = "Admin")]
     public class CountriesController : Controller
     {
         private readonly DataContext _context;

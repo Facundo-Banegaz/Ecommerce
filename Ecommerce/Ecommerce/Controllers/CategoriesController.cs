@@ -1,10 +1,12 @@
 ﻿using Ecommerce.Data;
 using Ecommerce.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategoriesController: Controller
     {
         private readonly DataContext _context;

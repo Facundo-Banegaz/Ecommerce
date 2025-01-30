@@ -1,4 +1,7 @@
 using Ecommerce.Data;
+using Ecommerce.Data.Entities;
+using Ecommerce.Helpers;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,11 +12,61 @@ var strConection = builder.Configuration.GetConnectionString("CadenaSql").ToStri
 
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(strConection));
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/NotAuthorized";
+    options.AccessDeniedPath = "/Account/NotAuthorized";
+});
+
+
+//TODO: Hacer pasword mas seguros para produccion
+builder.Services.AddIdentity<User, IdentityRole>(cfg =>
+{
+    cfg.User.RequireUniqueEmail = true;
+    cfg.Password.RequireDigit = false;
+    cfg.Password.RequiredUniqueChars = 0;
+    cfg.Password.RequireLowercase = false;
+    cfg.Password.RequireNonAlphanumeric = false;
+    cfg.Password.RequireUppercase = false;
+    //por defecto es 6
+    //cfg.Password.RequiredLength = 6;
+}).AddEntityFrameworkStores<DataContext>();
+
+
+
+//Se usa una solo vez y lo destruye cuando ya no lo necesita
+builder.Services.AddTransient<SeedDb>();
+builder.Services.AddScoped<IUserHelper,UserHelper>();
+
+
+//Se usa cada vez que se las necesita y despues se destruye cuando ya lo utilizamos
+//builder.Services.AddScoped<SeedDb>();
+
+//Se usa una vez y se queda en memoria no se destruye
+//builder.Services.AddSingleton<SeedDb>();
 
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 
-var app = builder.Build();
+
+WebApplication? app = builder.Build();
+
+SeedData(app);
+
+void SeedData(WebApplication app)
+{
+    IServiceScopeFactory? scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+    using (IServiceScope? scope = scopedFactory.CreateScope())
+    {
+        SeedDb? service = scope.ServiceProvider.GetService<SeedDb>();
+        service.SeedAsync().Wait();
+    }
+}
+
+
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -22,11 +75,15 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+app.UseStatusCodePagesWithReExecute("/error/{0}");
 
 app.UseHttpsRedirection();
 app.UseRouting();
 
+
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapStaticAssets();
 
