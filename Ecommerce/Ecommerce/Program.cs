@@ -37,6 +37,7 @@ builder.Services.AddIdentity<User, IdentityRole>(cfg =>
 //Se usa una solo vez y lo destruye cuando ya no lo necesita
 builder.Services.AddTransient<SeedDb>();
 builder.Services.AddScoped<IUserHelper,UserHelper>();
+builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 
 
 //Se usa cada vez que se las necesita y despues se destruye cuando ya lo utilizamos
