@@ -5,36 +5,62 @@
 }
 
 
-<div class="row">
-    <div class="col-md-12">
-        <h3>Iniciar Sesión</h3>
-        <form asp-action="Login">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" type="password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group mt-2">
-                <div class="form-check">
-                    <input asp-for="RememberMe" type="checkbox" class="form-check-input" />
-                    <label asp-for="RememberMe" class="form-check-label"></label>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm p-4">
+            <div class="row g-0">
+                <!-- Columna de la imagen (solo visible en pantallas medianas y grandes) -->
+                <div class="col-md-5 d-none d-md-block">
+                    <img src="~/images/login.jpg" class="img-fluid rounded-start" alt="Iniciar sesión">
                 </div>
-                <span asp-validation-for="RememberMe" class="text-warning"></span>
-            </div>
-            <div class="form-group mt-2">
-                <input type="submit" value="Iniciar Sesión" class="btn btn-outline-primary" />
-                <a asp-action="Register" class="btn btn-outline-secondary">Registrar Nuevo Usuario</a>
-            </div>
-        </form>
+
+                <!-- Columna del formulario -->
+                <div class="col-md-7">
+                    <div class="card-body">
+                        <h3 class="text-center mb-4">
+                            <i class="bi bi-person-circle"></i> Iniciar Sesión
+                        </h3>
+                        <form asp-action="Login">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <!-- Campo Usuario -->
+                            <div class="mb-3">
+                                <label asp-for="Username" class="form-label">Usuario</label>
+                                <input asp-for="Username" class="form-control" placeholder="Ingresa tu usuario" required />
+                                <span asp-validation-for="Username" class="text-danger"></span>
+                            </div>
+
+                            <!-- Campo Contraseña -->
+                            <div class="mb-3">
+                                <label asp-for="Password" class="form-label">Contraseña</label>
+                                <input asp-for="Password" type="password" class="form-control" placeholder="Ingresa tu contraseña" required />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+
+                            <!-- Recordarme -->
+                            <div class="mb-3 form-check">
+                                <input asp-for="RememberMe" type="checkbox" class="form-check-input" id="rememberMe" />
+                                <label asp-for="RememberMe" class="form-check-label">Recordarme</label>
+                            </div>
+
+                            <!-- Botón de inicio de sesión y enlace a registro -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                                <a asp-action="Register" class="btn btn-outline-secondary">Registrar Nuevo Usuario</a>
+                            </div>
+
+                            <!-- Enlace para recuperar contraseña -->
+                            <div class="text-center mt-3">
+                                <a asp-action="ForgotPassword" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+                            </div>
+                        </form>
+                    </div>
+                </div> <!-- Fin columna formulario -->
+            </div> <!-- Fin row -->
+        </div> <!-- Fin card -->
     </div>
-   
 </div>
+
 
 @section Scripts {
     @{
