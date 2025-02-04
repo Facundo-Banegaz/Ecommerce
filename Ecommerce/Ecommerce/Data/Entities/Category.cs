@@ -4,7 +4,7 @@ namespace Ecommerce.Data.Entities
 {
     public class Category
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Categoría")]
         [Required(ErrorMessage = "El Campo {0} es obligatorio.")]

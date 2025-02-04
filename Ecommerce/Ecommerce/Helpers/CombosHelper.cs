@@ -36,7 +36,7 @@ namespace Ecommerce.Helpers
 
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetComboCitiesAsync(Guid stateId)
+        public async Task<IEnumerable<SelectListItem>> GetComboCitiesAsync(int stateId)
         {
 
             List<SelectListItem> list = await _context.Cities
@@ -79,7 +79,7 @@ namespace Ecommerce.Helpers
 
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetComboStatesAsync(Guid countryId)
+        public async Task<IEnumerable<SelectListItem>> GetComboStatesAsync(int countryId)
         {
             List<SelectListItem> list = await _context.States
               .Where(x => x.Country.Id == countryId)

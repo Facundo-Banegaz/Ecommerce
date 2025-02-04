@@ -26,7 +26,7 @@ namespace Ecommerce.Controllers
         }
 
         // GET: Countries/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -46,7 +46,7 @@ namespace Ecommerce.Controllers
         }
 
         // GET: State/Details/5
-        public async Task<IActionResult> DetailsState(Guid? id)
+        public async Task<IActionResult> DetailsState(int? id)
         {
             if (id == null)
             {
@@ -67,7 +67,7 @@ namespace Ecommerce.Controllers
         }
 
 
-        public async Task<IActionResult> DetailsCity(Guid? id)
+        public async Task<IActionResult> DetailsCity(int? id)
         {
             if (id == null)
             {
@@ -86,7 +86,7 @@ namespace Ecommerce.Controllers
             return View(city);
         }
         // GET: State/Create
-        public async Task<IActionResult> AddState(Guid? Id)
+        public async Task<IActionResult> AddState(int? Id)
         {
             if (Id == null)
             {
@@ -167,7 +167,7 @@ namespace Ecommerce.Controllers
 
 
         // GET: State/Create
-        public async Task<IActionResult> AddCity(Guid? Id)
+        public async Task<IActionResult> AddCity(int? Id)
         {
             if (Id == null)
             {
@@ -257,7 +257,7 @@ namespace Ecommerce.Controllers
             {
                 try
                 {
-                    country.Id = Guid.NewGuid();
+                    
                     _context.Add(country);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -284,7 +284,7 @@ namespace Ecommerce.Controllers
 
 
         // GET: Countries/Edit/5
-        public async Task<IActionResult> EditState(Guid? Id)
+        public async Task<IActionResult> EditState(int? Id)
         {
             if (Id == null)
             {
@@ -313,7 +313,7 @@ namespace Ecommerce.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditState(Guid id, StateViewModel model)
+        public async Task<IActionResult> EditState(int id, StateViewModel model)
         {
             if (id != model.Id)
             {
@@ -356,7 +356,7 @@ namespace Ecommerce.Controllers
         }
 
         // GET: Countries/Edit/5
-        public async Task<IActionResult> EditCity(Guid? Id)
+        public async Task<IActionResult> EditCity(int? Id)
         {
             if (Id == null)
             {
@@ -385,7 +385,7 @@ namespace Ecommerce.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditCity(Guid id, CityViewModel model)
+        public async Task<IActionResult> EditCity(int id, CityViewModel model)
         {
             if (id != model.Id)
             {
@@ -430,7 +430,7 @@ namespace Ecommerce.Controllers
 
 
         // GET: Countries/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -452,7 +452,7 @@ namespace Ecommerce.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, Country country)
+        public async Task<IActionResult> Edit(int id, Country country)
         {
             if (id != country.Id)
             {
@@ -489,7 +489,7 @@ namespace Ecommerce.Controllers
         }
 
         // GET: Countries/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -508,7 +508,7 @@ namespace Ecommerce.Controllers
         // POST: Countries/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var country = await _context.Countries.FindAsync(id);
             if (country != null)
@@ -521,7 +521,7 @@ namespace Ecommerce.Controllers
         }
 
         // GET: Countries/Delete/5
-        public async Task<IActionResult> DeleteState(Guid? id)
+        public async Task<IActionResult> DeleteState(int? id)
         {
             if (id == null)
             {
@@ -540,7 +540,7 @@ namespace Ecommerce.Controllers
         // POST: Countries/Delete/5
         [HttpPost, ActionName("DeleteState")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteStateConfirmed(Guid id)
+        public async Task<IActionResult> DeleteStateConfirmed(int id)
         {
             State state = await _context.States.Include(c => c.Country).FirstOrDefaultAsync(m => m.Id == id);
             if (state != null)
@@ -554,7 +554,7 @@ namespace Ecommerce.Controllers
 
 
         // GET: Countries/Delete/5
-        public async Task<IActionResult> DeleteCity(Guid? id)
+        public async Task<IActionResult> DeleteCity(int? id)
         {
             if (id == null)
             {
@@ -573,7 +573,7 @@ namespace Ecommerce.Controllers
         // POST: Countries/Delete/5
         [HttpPost, ActionName("DeleteCity")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteCityConfirmed(Guid id)
+        public async Task<IActionResult> DeleteCityConfirmed(int id)
         {
             City city = await _context.Cities.Include(c => c.State).FirstOrDefaultAsync(m => m.Id == id);
             if (city != null)

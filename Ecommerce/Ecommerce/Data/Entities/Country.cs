@@ -4,7 +4,7 @@ namespace Ecommerce.Data.Entities
 {
     public class Country
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Pais")]
         [Required(ErrorMessage ="El Campo {0} es obligatorio.")]
