@@ -40,7 +40,7 @@ namespace Ecommerce.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.City", b =>
@@ -66,7 +66,7 @@ namespace Ecommerce.Migrations
                     b.HasIndex("Name", "StateId")
                         .IsUnique();
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.Country", b =>
@@ -87,7 +87,7 @@ namespace Ecommerce.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.State", b =>
@@ -113,7 +113,7 @@ namespace Ecommerce.Migrations
                     b.HasIndex("Name", "CountryId")
                         .IsUnique();
 
-                    b.ToTable("States");
+                    b.ToTable("States", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.User", b =>

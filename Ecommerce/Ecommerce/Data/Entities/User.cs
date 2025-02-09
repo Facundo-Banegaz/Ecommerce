@@ -1,6 +1,7 @@
 ﻿using Ecommerce.Enums;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ecommerce.Data.Entities
 {
@@ -29,7 +30,8 @@ namespace Ecommerce.Data.Entities
         [Display(Name = "Foto")]
         public Guid ImageId { get; set; }
 
-     
+
+
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
             ? $"https://localhost:7232/images/no-camera.png"

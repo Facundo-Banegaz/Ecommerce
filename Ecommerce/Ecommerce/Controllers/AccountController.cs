@@ -4,6 +4,7 @@ using Ecommerce.Enums;
 using Ecommerce.Helpers;
 using Ecommerce.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Mono.TextTemplating;
@@ -91,13 +92,17 @@ namespace Ecommerce.Controllers
             if (ModelState.IsValid)
             {
                 Guid imageId = Guid.Empty;
+               
 
                 if (model.ImageFile != null)
                 {
                     imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
                 }
 
+
                 model.ImageId = imageId;
+             
+
                 User user = await _userHelper.AddUserAsync(model);
 
                 if (user == null)
@@ -133,9 +138,10 @@ namespace Ecommerce.Controllers
         }
 
 
-        public JsonResult GetStates(int countryId)
+
+        public JsonResult? GetStates(int countryId)
         {
-            Country country = _context.Countries
+            Country? country = _context.Countries
                 .Include(c => c.States)
                 .FirstOrDefault(c => c.Id == countryId);
             if (country == null)
@@ -146,9 +152,9 @@ namespace Ecommerce.Controllers
             return Json(country.States.OrderBy(d => d.Name));
         }
 
-        public JsonResult GetCities(int stateId)
+        public JsonResult? GetCities(int stateId)
         {
-            Data.Entities.State state = _context.States
+            Data.Entities.State? state = _context.States
                 .Include(s => s.Cities)
                 .FirstOrDefault(s => s.Id == stateId);
             if (state == null)
@@ -159,6 +165,111 @@ namespace Ecommerce.Controllers
             return Json(state.Cities.OrderBy(c => c.Name));
         }
 
+
+        public async Task<IActionResult> ChangeUser()
+        {
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            EditUserViewModel model = new()
+            {
+                Address = user.Address,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                ImageId = user.ImageId,
+                Cities = await _combosHelper.GetComboCitiesAsync(user.City.State.Id),
+                CityId = user.City.Id,
+                Countries = await _combosHelper.GetComboCountriesAsync(),
+                CountryId = user.City.State.Country.Id,
+                StateId = user.City.State.Id,
+                States = await _combosHelper.GetComboStatesAsync(user.City.State.Country.Id),
+                Id = user.Id,
+                Document = user.Document
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeUser(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Guid imageId = model.ImageId;
+                
+                if (model.ImageFile != null)
+                {
+                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                }
+
+                User user = await _userHelper.GetUserAsync(User.Identity.Name);
+
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Address = model.Address;
+                user.PhoneNumber = model.PhoneNumber;
+                user.ImageId = imageId;
+                user.City = await _context.Cities.FindAsync(model.CityId);
+                user.Document = model.Document;
+
+                await _userHelper.UpdateUserAsync(user);
+                return RedirectToAction("Index", "Home");
+            }
+
+            model.Countries = await _combosHelper.GetComboCountriesAsync();
+            model.States = await _combosHelper.GetComboStatesAsync(model.CountryId);
+            model.Cities = await _combosHelper.GetComboCitiesAsync(model.StateId);
+            return View(model);
+        }
+
+
+
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                if (model.OldPassword == model.NewPassword)
+                {
+
+                    ModelState.AddModelError(string.Empty, "Debes ingresar una contraseña diferente.");
+                    return View(model);
+                }
+
+
+                User? user = await _userHelper.GetUserAsync(User.Identity.Name);
+                if (user != null)
+                {
+                    IdentityResult? result = await _userHelper.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ChangeUser");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, result.Errors.FirstOrDefault().Description);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Usuario no encontrado.");
+                }
+            }
+
+            return View(model);
+        }
 
     }
 }
