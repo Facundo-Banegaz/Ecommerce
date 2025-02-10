@@ -82,6 +82,23 @@ namespace Ecommerce.Helpers
 
         }
 
+        public async Task<IdentityResult> ConfirmEmailAsync(User user, string token)
+        {
+            return await _userManager.ConfirmEmailAsync(user, token);
+
+        }
+
+        public async Task<string> GenerateEmailConfirmationTokenAsync(User user)
+        {
+            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+        }
+
+        public Task<string> GeneratePasswordResetTokenAsync(User user)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<User> GetUserAsync(string email)
         {
             return await _context.Users
@@ -119,6 +136,11 @@ namespace Ecommerce.Helpers
         public async Task LogoutAsync()
         {
             await _signInManager.SignOutAsync();
+        }
+
+        public Task<IdentityResult> ResetPasswordAsync(User user, string token, string password)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<IdentityResult> UpdateUserAsync(User user)

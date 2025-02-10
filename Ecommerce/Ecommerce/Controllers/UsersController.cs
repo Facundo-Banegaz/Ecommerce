@@ -6,6 +6,7 @@ using Ecommerce.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Ecommerce.Common;
 
 namespace Ecommerce.Controllers
 {
@@ -17,13 +18,15 @@ namespace Ecommerce.Controllers
         private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
         private readonly IBlobHelper _blobHelper;
+        private readonly IMailHelper _mailHelper;
 
-        public UsersController(IUserHelper userHelper, DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper)
+        public UsersController(IUserHelper userHelper, DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper,IMailHelper mailHelper)
         {
            this._userHelper = userHelper;
             this._context = context;
             this._combosHelper = combosHelper;
             this._blobHelper = blobHelper;
+            this._mailHelper = mailHelper;
         }
 
         public async Task<IActionResult> Index()
@@ -75,8 +78,39 @@ namespace Ecommerce.Controllers
                     model.Cities = await _combosHelper.GetComboCitiesAsync(model.StateId);
                     return View(model);
                 }
+                string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                string tokenLink = Url.Action("ConfirmEmail", "Account", new
+                {
+                    userid = user.Id,
+                    token = myToken
+                }, protocol: HttpContext.Request.Scheme);
 
-                return RedirectToAction(nameof(Index));
+                // Ruta del archivo de plantilla
+                string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/templates/email-confirmacion.cshtml");
+
+                // Leer el contenido del archivo
+                string emailBody = System.IO.File.ReadAllText(templatePath);
+
+                // Reemplazar los placeholders con datos reales
+                emailBody = emailBody.Replace("{{FirstName}}", model.FirstName)
+                                     .Replace("{{LastName}}", model.LastName)
+                                     .Replace("{{TokenLink}}", tokenLink)
+                                     .Replace("{{Year}}", DateTime.Now.Year.ToString());
+
+                // Enviar el email con la plantilla cargada
+                Response response = _mailHelper.SendMail(
+                    $"{model.FirstName} {model.LastName}",
+                    model.Username,
+                    "Ecommerce - Confirmación de Email",
+                    emailBody
+                );
+
+                if (response.IsSuccess)
+                {
+                    ViewBag.Message = "Las instrucciones para habilitar el Administrador han sido enviadas al correo.";
+                    return View(model);
+                }
+                ModelState.AddModelError(string.Empty, response.Message);
             }
 
             model.Countries = await _combosHelper.GetComboCountriesAsync();

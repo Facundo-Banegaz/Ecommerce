@@ -260,6 +260,10 @@ namespace Ecommerce.Data
 
                 await _userHelper.AddUserAsync(user, "facu1234");
                 await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+
+                string token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                await _userHelper.ConfirmEmailAsync(user, token);
+
             }
 
             return user;

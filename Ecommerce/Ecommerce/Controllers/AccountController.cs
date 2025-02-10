@@ -1,4 +1,5 @@
-﻿using Ecommerce.Data;
+﻿using Ecommerce.Common;
+using Ecommerce.Data;
 using Ecommerce.Data.Entities;
 using Ecommerce.Enums;
 using Ecommerce.Helpers;
@@ -20,13 +21,16 @@ namespace Ecommerce.Controllers
         private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
         private readonly IBlobHelper _blobHelper;
+        private readonly IMailHelper _mailHelper;
 
-        public AccountController(IUserHelper userHelper, DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper)
+        public AccountController(IUserHelper userHelper, DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper,
+            IMailHelper mailHelper)
         {
             this._userHelper = userHelper;
             this._context = context;
             this._combosHelper = combosHelper;
             this._blobHelper = blobHelper;
+            this._mailHelper = mailHelper;
         }
         public IActionResult Login()
         {
@@ -54,6 +58,10 @@ namespace Ecommerce.Controllers
                 if (result.IsLockedOut)
                 {
                     ModelState.AddModelError(string.Empty, "Ha superado el máximo número de intentos, su cuenta está bloqueada, intente de nuevo en 5 minutos.");
+                }
+                else if (result.IsNotAllowed)
+                {
+                    ModelState.AddModelError(string.Empty, "El usuario no ha sido habilitado, debes de seguir las instrucciones del correo enviado para poder habilitar el usuario.");
                 }
                 else
                 {
@@ -125,19 +133,41 @@ namespace Ecommerce.Controllers
                     return View(model);
                 }
 
-                LoginViewModel loginViewModel = new LoginViewModel
+                string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                string tokenLink = Url.Action("ConfirmEmail", "Account", new
                 {
-                    Password = model.Password,
-                    RememberMe = false,
-                    Username = model.Username
-                };
+                    userid = user.Id,
+                    token = myToken
+                }, protocol: HttpContext.Request.Scheme);
 
-                var result2 = await _userHelper.LoginAsync(loginViewModel);
+                // Ruta del archivo de plantilla
+                string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/templates/email-confirmacion.cshtml");
 
-                if (result2.Succeeded)
+                // Leer el contenido del archivo
+                string emailBody = System.IO.File.ReadAllText(templatePath);
+
+                // Reemplazar los placeholders con datos reales
+                emailBody = emailBody.Replace("{{FirstName}}", model.FirstName)
+                                     .Replace("{{LastName}}", model.LastName)
+                                     .Replace("{{TokenLink}}", tokenLink)
+                                     .Replace("{{Year}}", DateTime.Now.Year.ToString());
+
+                // Enviar el email con la plantilla cargada
+                Response response = _mailHelper.SendMail(
+                    $"{model.FirstName} {model.LastName}",
+                    model.Username,
+                    "Ecommerce - Confirmación de Email",
+                    emailBody
+                );
+
+                if (response.IsSuccess)
                 {
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.Message = "Las instrucciones para habilitar el usuario han sido enviadas al correo.";
+                    return View(model);
                 }
+
+                ModelState.AddModelError(string.Empty, response.Message);
+
             }
 
             model.Countries = await _combosHelper.GetComboCountriesAsync();
@@ -279,6 +309,29 @@ namespace Ecommerce.Controllers
 
             return View(model);
         }
+
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
+            {
+                return NotFound();
+            }
+
+            User user = await _userHelper.GetUserAsync(new Guid(userId));
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            IdentityResult result = await _userHelper.ConfirmEmailAsync(user, token);
+            if (!result.Succeeded)
+            {
+                return NotFound();
+            }
+
+            return View();
+        }
+
 
     }
 }
