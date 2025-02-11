@@ -94,9 +94,9 @@ namespace Ecommerce.Helpers
 
         }
 
-        public Task<string> GeneratePasswordResetTokenAsync(User user)
+        public async Task<string> GeneratePasswordResetTokenAsync(User user)
         {
-            throw new NotImplementedException();
+            return await _userManager.GeneratePasswordResetTokenAsync(user);
         }
 
         public async Task<User> GetUserAsync(string email)
@@ -138,9 +138,11 @@ namespace Ecommerce.Helpers
             await _signInManager.SignOutAsync();
         }
 
-        public Task<IdentityResult> ResetPasswordAsync(User user, string token, string password)
+        public async Task<IdentityResult> ResetPasswordAsync(User user, string token, string password)
         {
-            throw new NotImplementedException();
+            return await _userManager.ResetPasswordAsync(user, token, password);
+
+
         }
 
         public async Task<IdentityResult> UpdateUserAsync(User user)

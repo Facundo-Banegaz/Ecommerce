@@ -2,59 +2,90 @@
 
 <div class="row">
     <div class="col-md-6">
+   
         <div class="form-group">
             <label asp-for="Document" class="control-label"></label>
-            <input asp-for="Document" class="form-control" />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                <input asp-for="Document" class="form-control" placeholder="Ingrese su documento" />
+            </div>
             <span asp-validation-for="Document" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="FirstName" class="control-label"></label>
-            <input asp-for="FirstName" class="form-control" />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                <input asp-for="FirstName" class="form-control" placeholder="Ingrese su nombre" />
+            </div>
             <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="LastName" class="control-label"></label>
-            <input asp-for="LastName" class="form-control" />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                <input asp-for="LastName" class="form-control" placeholder="Ingrese su apellido" />
+            </div>
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="Address" class="control-label"></label>
-            <input asp-for="Address" class="form-control" />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                <input asp-for="Address" class="form-control" placeholder="Ingrese su dirección" />
+            </div>
             <span asp-validation-for="Address" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="PhoneNumber" class="control-label"></label>
-            <input asp-for="PhoneNumber" class="form-control" />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                <input asp-for="PhoneNumber" class="form-control" placeholder="Ingrese su teléfono" />
+            </div>
             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
         </div>
     </div>
+
     <div class="col-md-6">
         <div class="form-group">
             <label asp-for="ImageFile" class="control-label"></label>
-            <input asp-for="ImageFile" class="form-control" type="file" />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-image"></i></span>
+                <input asp-for="ImageFile" class="form-control" type="file" />
+            </div>
             <span asp-validation-for="ImageFile" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="CountryId" class="control-label"></label>
-            <select asp-for="CountryId" asp-items="Model.Countries" class="form-control"></select>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-globe"></i></span>
+                <select asp-for="CountryId" asp-items="Model.Countries" class="form-control"></select>
+            </div>
             <span asp-validation-for="CountryId" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="StateId" class="control-label"></label>
-            <select asp-for="StateId" asp-items="Model.States" class="form-control"></select>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-map"></i></span>
+                <select asp-for="StateId" asp-items="Model.States" class="form-control"></select>
+            </div>
             <span asp-validation-for="StateId" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="CityId" class="control-label"></label>
-            <select asp-for="CityId" asp-items="Model.Cities" class="form-control"></select>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-buildings"></i></span>
+                <select asp-for="CityId" asp-items="Model.Cities" class="form-control"></select>
+            </div>
             <span asp-validation-for="CityId" class="text-danger"></span>
         </div>
     </div>
 </div>
+
+

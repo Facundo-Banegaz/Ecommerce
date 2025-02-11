@@ -332,6 +332,93 @@ namespace Ecommerce.Controllers
             return View();
         }
 
+        public IActionResult RecoverPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RecoverPassword(RecoverPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = await _userHelper.GetUserAsync(model.Email);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "El email no corresponde a ningún usuario registrado.");
+                    return View(model);
+                }
+
+                string myToken = await _userHelper.GeneratePasswordResetTokenAsync(user);
+
+        
+
+                // Generar el enlace para resetear la contraseña
+                string link = Url.Action(
+                    "ResetPassword",
+                    "Account",
+                    new { token = myToken }, protocol: HttpContext.Request.Scheme);
+
+                // Ruta del archivo de plantilla
+                string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/templates/password-recuperacion.cshtml");
+
+                // Leer el contenido de la plantilla
+                string emailBody = System.IO.File.ReadAllText(templatePath);
+
+                // Reemplazar los placeholders con los datos reales
+                emailBody = emailBody.Replace("{{FullName}}", user.FullName)
+                                     .Replace("{{Email}}", model.Email)
+                                     .Replace("{{TokenLink}}", link)
+                                     .Replace("{{Year}}", DateTime.Now.Year.ToString());
+
+                // Enviar el correo con la plantilla cargada
+                Response response = _mailHelper.SendMail(
+                    $"{user.FullName}",
+                    model.Email,
+                    "Ecommerce - Recuperación de Contraseña",
+                    emailBody
+                );
+
+                // Verificar si el correo se envió exitosamente
+                if (response.IsSuccess)
+                {
+                    ViewBag.Message = "Las instrucciones para recuperar la contraseña han sido enviadas a su correo.";
+                    return View();
+                }
+               
+                
+                    ModelState.AddModelError(string.Empty, "Hubo un error al intentar enviar el correo.");
+                    
+            }
+
+            return View(model);
+        }
+
+        public IActionResult ResetPassword(string token)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            User user = await _userHelper.GetUserAsync(model.UserName);
+            if (user != null)
+            {
+                IdentityResult result = await _userHelper.ResetPasswordAsync(user, model.Token, model.Password);
+                if (result.Succeeded)
+                {
+                    ViewBag.Message = "Contraseña cambiada con éxito.";
+                    return View();
+                }
+
+                ViewBag.Message = "Error cambiando la contraseña.";
+                return View(model);
+            }
+
+            ViewBag.Message = "Usuario no encontrado.";
+            return View(model);
+        }
 
     }
 }

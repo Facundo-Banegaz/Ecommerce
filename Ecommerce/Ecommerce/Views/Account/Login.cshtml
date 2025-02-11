@@ -4,61 +4,75 @@
     ViewData["Title"] = "Login";
 }
 
-
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card shadow-sm p-4">
-            <div class="row g-0 align-items-center">
-                <!-- Agregamos align-items-center aquí -->
-                <!-- Columna de la imagen (solo visible en pantallas medianas y grandes) -->
-                <div class="col-md-5 d-none d-md-block d-flex justify-content-center align-items-center">
-                    <img src="~/images/login.jpg" class="img-fluid rounded-start" alt="Iniciar sesión">
-                </div>
-
-                <!-- Columna del formulario -->
-                <div class="col-md-7">
-                    <div class="card-body">
-                        <h3 class="text-center mb-4">
-                            <i class="bi bi-person-circle"></i> Iniciar Sesión
-                        </h3>
-                        <form asp-action="Login">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                            <!-- Campo Usuario -->
-                            <div class="mb-3">
-                                <label asp-for="Username" class="form-label">Usuario</label>
-                                <input asp-for="Username" class="form-control" placeholder="Ingresa tu usuario" required />
-                                <span asp-validation-for="Username" class="text-danger"></span>
-                            </div>
-
-                            <!-- Campo Contraseña -->
-                            <div class="mb-3">
-                                <label asp-for="Password" class="form-label">Contraseña</label>
-                                <input asp-for="Password" type="password" class="form-control" placeholder="Ingresa tu contraseña" required />
-                                <span asp-validation-for="Password" class="text-danger"></span>
-                            </div>
-
-                            <!-- Recordarme -->
-                            <div class="mb-3 form-check">
-                                <input asp-for="RememberMe" type="checkbox" class="form-check-input" id="rememberMe" />
-                                <label asp-for="RememberMe" class="form-check-label">Recordarme</label>
-                            </div>
-
-                            <!-- Botón de inicio de sesión y enlace a registro -->
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-                                <a asp-action="Register" class="btn btn-outline-secondary">Registrar Nuevo Usuario</a>
-                            </div>
-
-                            <!-- Enlace para recuperar contraseña -->
-                            <div class="text-center mt-3">
-                                <a asp-action="ForgotPassword" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
-                            </div>
-                        </form>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-8">
+            <div class="card shadow-sm p-4">
+                <div class="row g-0 align-items-center">
+                    <!-- Imagen (solo en pantallas medianas y grandes) -->
+                    <div class="col-md-5 d-none d-md-block justify-content-center align-items-center">
+                        <img src="~/images/login.jpg" class="img-fluid rounded-start" alt="Iniciar sesión">
                     </div>
-                </div> <!-- Fin columna formulario -->
-            </div> <!-- Fin row -->
-        </div> <!-- Fin card -->
+
+                    <!-- Columna del formulario -->
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <h3 class="text-center mb-4">
+                                <i class="bi bi-person-circle"></i> Iniciar Sesión
+                            </h3>
+                            <form asp-action="Login">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <!-- Campo Usuario -->
+                                <div class="mb-3">
+                                    <label asp-for="Username" class="form-label">Usuario</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                        <input asp-for="Username" class="form-control" placeholder="Ingresa tu usuario" required />
+                                    </div>
+                                    <span asp-validation-for="Username" class="text-danger"></span>
+                                </div>
+
+                                <!-- Campo Contraseña -->
+                                <div class="mb-3">
+                                    <label asp-for="Password" class="form-label">Contraseña</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                        <input asp-for="Password" type="password" class="form-control" placeholder="Ingresa tu contraseña" required />
+                                    </div>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+
+                                <!-- Recordarme -->
+                                <div class="mb-3 form-check">
+                                    <input asp-for="RememberMe" type="checkbox" class="form-check-input" id="rememberMe" />
+                                    <label asp-for="RememberMe" class="form-check-label">Recordarme</label>
+                                </div>
+
+
+                                <!-- Botón de inicio de sesión y enlace a registro -->
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-outline-primary">
+                                        <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                                    </button>
+                                    <a asp-action="Register" class="btn btn-outline-secondary">
+                                        <i class="bi bi-person-plus"></i> Registrar Nuevo Usuario
+                                    </a>
+                                </div>
+
+                                <!-- Enlace para recuperar contraseña -->
+                                <div class="text-center mt-3">
+                                    <a asp-action="RecoverPassword" class="text-decoration-none">
+                                        <i class="bi bi-key"></i> ¿Olvidaste tu contraseña?
+                                    </a>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div> <!-- Fin columna formulario -->
+                </div> <!-- Fin row -->
+            </div> <!-- Fin card -->
+        </div>
     </div>
 </div>
 

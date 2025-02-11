@@ -4,58 +4,69 @@
     ViewData["Title"] = "Register";
 }
 
-<h2>Crear</h2>
 
-<h4>Administrador</h4>
-<hr />
 
-<div class="text-success">
-    <h4>
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-success mt-3">
         @ViewBag.Message
-    </h4>
-</div>
+    </div>
+}
 
-<div class="row">
+<div class="container d-flex justify-content-center align-items-center">
     <div class="col-md-12">
-        <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="UserType" />
-            <input type="hidden" asp-for="Countries" />
-            <input type="hidden" asp-for="States" />
-            <input type="hidden" asp-for="Cities" />
+        <h2 class="text-center">Crear</h2>
+        <h4 class="text-center text-muted">Administrador</h4>
+        <hr />
 
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
+        <div class="card p-4 shadow-lg">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="UserType" />
+                <input type="hidden" asp-for="Countries" />
+                <input type="hidden" asp-for="States" />
+                <input type="hidden" asp-for="Cities" />
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control" />
+                <div class="form-group mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input asp-for="Username" class="form-control" placeholder="Ingresa tu usuario" />
+                    </div>
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Ingresa tu contraseña" />
+                        </div>
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="PasswordConfirm" class="control-label"></label>
-                        <input asp-for="PasswordConfirm" class="form-control" />
+                    <div class="col-md-6 mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                            <input asp-for="PasswordConfirm" type="password" class="form-control" placeholder="Confirma tu contraseña" />
+                        </div>
                         <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
                     </div>
                 </div>
-            </div>
 
-            <partial name="_User" />
+                <partial name="_User" />
 
-            <div class="form-group mt-2">
-                <input type="submit" value="Crear" class="btn btn-outline-primary" />
-            </div>
-        </form>
+                <div class="form-group mt-3 text-center">
+                    <button type="submit" class="btn btn-primary w-100">Crear Administrador </button>
+                </div>
+
+                <div class="form-group mt-3 text-center">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary w-100">Regresar</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+
 
 @section Scripts {
     @{

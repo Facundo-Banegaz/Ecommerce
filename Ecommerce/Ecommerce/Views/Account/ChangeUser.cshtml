@@ -3,33 +3,55 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Editar</h2>
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="row w-100 d-flex flex-column flex-md-row align-items-center">
 
-<h4>Usuario</h4>
-<hr />
-<div class="row">
-    <div class="col-md-8">
-        <form asp-action="ChangeUser" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="ImageId" />
-            <input type="hidden" asp-for="Countries" />
-            <input type="hidden" asp-for="States" />
-            <input type="hidden" asp-for="Cities" />
+        <!-- Imagen del Usuario (Primero en móviles) -->
+        <div class="col-md-3 text-center mb-3 mb-md-0">
+            <img src="@Model.ImageFullPath" class="rounded-circle shadow-lg" style="width:200px; height:200px;">
+        </div>
 
-            <partial name="_User" />
+        <!-- Formulario -->
+        <div class="col-md-9">
+            <h2 class="text-center">Editar</h2>
+            <h4 class="text-center text-muted">Usuario</h4>
+            <hr />
 
-            <div class="form-group mt-2">
-                <input type="submit" value="Guardar" class="btn btn-outline-primary" />
-                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Regresar</a>
-                <a asp-action="ChangePassword" class="btn btn-outline-secondary">Cambiar Contraseña</a>
+            <div class="card p-4 shadow-lg">
+                <form asp-action="ChangeUser" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="ImageId" />
+                    <input type="hidden" asp-for="Countries" />
+                    <input type="hidden" asp-for="States" />
+                    <input type="hidden" asp-for="Cities" />
+
+                    <partial name="_User" />
+                    <div class="form-group mt-3 text-center">
+                        <button type="submit" class="btn btn-outline-primary w-100">
+                            <i class="bi bi-save"></i> Guardar
+                        </button>
+                    </div>
+
+                    <div class="form-group mt-3 text-center">
+                        <a asp-action="ChangePassword" class="btn btn-outline-success w-100">
+                            <i class="bi bi-key-fill"></i> Cambiar Contraseña
+                        </a>
+                    </div>
+
+                    <div class="form-group mt-3 text-center">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary w-100">
+                            <i class="bi bi-arrow-left"></i> Regresar
+                        </a>
+                    </div>
+
+                </form>
             </div>
-        </form>
-    </div>
-    <div class="col-md-4">
-        <img src="@Model.ImageFullPath" style="width:200px;height:200px;border-radius:50%" />
+        </div>
+
     </div>
 </div>
+
 
 @section Scripts {
     @{
