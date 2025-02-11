@@ -4,7 +4,7 @@
             <!-- Información de la empresa -->
             <div class="col-md-3 mb-3">
                 <h5>Sobre Nosotros</h5>
-                <p>Somos un eCommerce dedicado a ofrecerte los mejores productos con envíos a todo el país.</p>
+                <p>Somos un sitio dedicado a ofrecerte los mejores productos con envíos a todo el país.</p>
             </div>
 
             <!-- Enlaces rápidos -->
@@ -12,16 +12,24 @@
                 <h5>Enlaces Rápidos</h5>
                 <ul class="list-unstyled">
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                            <i class="bi bi-house"></i> Inicio
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Políticas</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">
+                            <i class="bi bi-info-circle"></i> Nosotros
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Iniciar Sesión</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">
+                            <i class="bi bi-envelope"></i> Contacto
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout">Cerrar Sesión</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">
+                            <i class="bi bi-shield-lock"></i> Políticas
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -32,7 +40,7 @@
                 <ul class="list-unstyled">
                     <li><i class="bi bi-geo-alt-fill"></i> Av. Siempre Viva 742, Springfield</li>
                     <li><i class="bi bi-telephone-fill"></i> +54 9 11 1234-5678</li>
-                    <li><i class="bi bi-envelope-fill"></i> contacto@ecommerce.com</li>
+                    <li><i class="bi bi-envelope-fill"></i> contacto@TodoShop.com</li>
                 </ul>
             </div>
 
@@ -53,7 +61,7 @@
         <!-- Derechos de autor -->
         <div class="row">
             <div class="col-md-12 text-center">
-                <p class="mb-0">&copy; 2024 Tu eCommerce. Todos los derechos reservados.</p>
+                <p class="mb-0">&copy; 2024 TodoShop. Todos los derechos reservados.</p>
             </div>
         </div>
     </div>
