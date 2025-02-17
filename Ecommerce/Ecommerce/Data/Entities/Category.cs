@@ -11,5 +11,8 @@ namespace Ecommerce.Data.Entities
         [MaxLength(50, ErrorMessage = "El Campo {0} debe tener maximo {1} caractéres.")]
 
         public string Name { get; set; }
+
+        public ICollection<ProductCategory> ProductCategories { get; set; }
+
     }
 }

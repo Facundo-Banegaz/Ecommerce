@@ -40,7 +40,7 @@ namespace Ecommerce.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.City", b =>
@@ -56,7 +56,7 @@ namespace Ecommerce.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("StateId")
+                    b.Property<int?>("StateId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -64,9 +64,10 @@ namespace Ecommerce.Migrations
                     b.HasIndex("StateId");
 
                     b.HasIndex("Name", "StateId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[StateId] IS NOT NULL");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.Country", b =>
@@ -87,7 +88,84 @@ namespace Ecommerce.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("Ecommerce.Data.Entities.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<float>("Stock")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Ecommerce.Data.Entities.ProductCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("ProductId", "CategoryId")
+                        .IsUnique()
+                        .HasFilter("[ProductId] IS NOT NULL AND [CategoryId] IS NOT NULL");
+
+                    b.ToTable("ProductCategories");
+                });
+
+            modelBuilder.Entity("Ecommerce.Data.Entities.ProductImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.State", b =>
@@ -98,7 +176,7 @@ namespace Ecommerce.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CountryId")
+                    b.Property<int?>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -111,9 +189,10 @@ namespace Ecommerce.Migrations
                     b.HasIndex("CountryId");
 
                     b.HasIndex("Name", "CountryId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[CountryId] IS NOT NULL");
 
-                    b.ToTable("States", (string)null);
+                    b.ToTable("States");
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.User", b =>
@@ -129,7 +208,7 @@ namespace Ecommerce.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("CityId")
+                    b.Property<int?>("CityId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -349,20 +428,40 @@ namespace Ecommerce.Migrations
                 {
                     b.HasOne("Ecommerce.Data.Entities.State", "State")
                         .WithMany("Cities")
-                        .HasForeignKey("StateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StateId");
 
                     b.Navigation("State");
+                });
+
+            modelBuilder.Entity("Ecommerce.Data.Entities.ProductCategory", b =>
+                {
+                    b.HasOne("Ecommerce.Data.Entities.Category", "Category")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("Ecommerce.Data.Entities.Product", "Product")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Ecommerce.Data.Entities.ProductImage", b =>
+                {
+                    b.HasOne("Ecommerce.Data.Entities.Product", "Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.State", b =>
                 {
                     b.HasOne("Ecommerce.Data.Entities.Country", "Country")
                         .WithMany("States")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CountryId");
 
                     b.Navigation("Country");
                 });
@@ -371,9 +470,7 @@ namespace Ecommerce.Migrations
                 {
                     b.HasOne("Ecommerce.Data.Entities.City", "City")
                         .WithMany("Users")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CityId");
 
                     b.Navigation("City");
                 });
@@ -429,6 +526,11 @@ namespace Ecommerce.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Ecommerce.Data.Entities.Category", b =>
+                {
+                    b.Navigation("ProductCategories");
+                });
+
             modelBuilder.Entity("Ecommerce.Data.Entities.City", b =>
                 {
                     b.Navigation("Users");
@@ -437,6 +539,13 @@ namespace Ecommerce.Migrations
             modelBuilder.Entity("Ecommerce.Data.Entities.Country", b =>
                 {
                     b.Navigation("States");
+                });
+
+            modelBuilder.Entity("Ecommerce.Data.Entities.Product", b =>
+                {
+                    b.Navigation("ProductCategories");
+
+                    b.Navigation("ProductImages");
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.State", b =>
