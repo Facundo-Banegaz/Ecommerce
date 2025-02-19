@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Ecommerce.Controllers;
+using Ecommerce.Data.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Ecommerce.Helpers
 {
@@ -6,6 +8,7 @@ namespace Ecommerce.Helpers
     {
         Task<IEnumerable<SelectListItem>> GetComboCategoriesAsync();
 
+        Task<IEnumerable<SelectListItem>> GetComboCategoriesAsync(IEnumerable<Category> filter);
         Task<IEnumerable<SelectListItem>> GetComboCountriesAsync();
 
         Task<IEnumerable<SelectListItem>> GetComboStatesAsync(int countryId);
