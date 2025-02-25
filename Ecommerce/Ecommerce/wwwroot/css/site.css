@@ -42,3 +42,28 @@ footer {
     margin-top: auto; /* Esto empuja el footer al fondo */
 }
 
+/* Efecto hover para la card */
+.card-hover:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+.card-custom {
+    min-height: 350px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    transition: box-shadow 0.3s;
+}
+
+.card-hover:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+.img-fixed {
+    height: 180px;
+    width: 180px;
+    object-fit: contain;
+}
+
+.title-fixed {
+    min-height: 50px;
+}
