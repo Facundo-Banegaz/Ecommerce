@@ -1,10 +1,11 @@
-﻿@model IEnumerable<Ecommerce.Models.ProductsHomeViewModel>
+﻿@model Ecommerce.Models.HomeViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-@foreach (var item in Model)
+
+@foreach (var item in Model.Products)
 {
     <div class="row">
         @if (item.Product1 != null)
