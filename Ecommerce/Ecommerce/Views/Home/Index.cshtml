@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="row row-cols-1 row-cols-md-4 g-4 mt-1">
+<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 mt-1">
     @if (Model.Products.Count() > 0)
     {
         @foreach (var item in Model.Products)
@@ -20,11 +20,11 @@
                             <div class="mt-auto">
                                 <div class="price-section">
                                     <div>
-                                        <small class="text-muted text-decoration-line-through fs-6">$12.222.00</small>
+                                        <small class="text-decoration-line-through text-danger">$12.222.00</small>
                                     </div>
                                     <div>
-                                        <span class="text-dark fw-bold fs-5">$@item.Price</span>
-                                        <span class="badge bg-success ms-2">25% OFF</span>
+                                        <span class="text-success fw-bold">$@item.Price</span>
+                                        <span class="badge bg-primary">25% OFF</span>
                                     </div>
                                 </div>
                                 <div class="text-success fw-bold mt-2">¡Retiralo YA!</div>

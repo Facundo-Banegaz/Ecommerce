@@ -59,6 +59,7 @@ namespace Ecommerce.Controllers
         {
             return View();
         }
+        //add de carito de compras
         public async Task<IActionResult> Add(int? id)
         {
             if (id == null)
@@ -94,6 +95,12 @@ namespace Ecommerce.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+
+        //Detalle de producto
+
+
+
 
     }
 }
