@@ -20,10 +20,10 @@
                             <div class="mt-auto">
                                 <div class="price-section">
                                     <div>
-                                        <small class="text-decoration-line-through text-danger">$12.222.00</small>
+                                        <small class="text-decoration-line-through text-danger">$12.222,00</small>
                                     </div>
                                     <div>
-                                        <span class="text-success fw-bold">$@item.Price</span>
+                                        <span class="text-success fw-bold">@item.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))</span>
                                         <span class="badge bg-primary">25% OFF</span>
                                     </div>
                                 </div>

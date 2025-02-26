@@ -3,8 +3,15 @@ using Ecommerce.Data.Entities;
 using Ecommerce.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configurar la cultura en toda la aplicación
+var cultureInfo = new CultureInfo("es-AR");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -62,6 +69,13 @@ builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 
 WebApplication? app = builder.Build();
+
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(cultureInfo),
+    SupportedCultures = new List<CultureInfo> { cultureInfo },
+    SupportedUICultures = new List<CultureInfo> { cultureInfo }
+});
 
 SeedData(app);
 
