@@ -75,14 +75,7 @@
             <ul class="navbar-nav">
                 @if (User.Identity.IsAuthenticated)
                 {
-                   @*  @if (Model != null && Model.Quantity > 0)
-                    {
-                        <li class="nav-item">
-                            <a asp-action="ShowCart" class="nav-link text-dark">
-                                <i class="bi bi-cart-fill"></i> @Model.Quantity
-                            </a>
-                        </li>
-                    } *@
+
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ChangeUser">
                             <i class="bi bi-person-circle"></i> ¡Hola, @User.Identity.Name!

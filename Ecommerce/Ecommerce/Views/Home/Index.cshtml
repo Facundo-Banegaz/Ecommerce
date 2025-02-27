@@ -4,6 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
+@if (Model.Quantity > 0)
+{
+    <a asp-action="ShowCart" class="btn btn-outline-primary text-decoretion-none mt-5">Ver Carro de Compras <i class="bi bi-cart-fill"></i> (@Model.Quantity)</a>
+}
+ 
+
 <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 mt-1">
     @if (Model.Products.Count() > 0)
     {
@@ -38,7 +44,26 @@
     }
     else
     {
-        <h3>No hay productos con su criterio de búsqueda</h3>
+        <div class="col w-100 d-flex justify-content-center align-items-center">
+            <div class="card w-100 w-md-50 shadow-lg rounded-lg">
+                <div class="card-body text-center">
+                    <!-- Imagen -->
+                    <img src="~/Images/lupa.png" alt="No encontrado" class="card-img-top img-fluid mb-4"
+                         style="max-height: 250px; object-fit: contain;" />
+
+                    <!-- Texto principal -->
+                    <p class="fs-4 fw-bold text-muted">No se encontraron resultados.</p>
+                    <p class="mb-4">Utiliza palabras genéricas o navega por las categorías para encontrar productos similares.</p>
+
+                    <!-- Sugerencia de acción -->
+                    <small class="d-block mb-4 text-muted">Te recomendamos revisar la escritura de la palabra, buscar una palabra distinta o navegar por las categorías.</small>
+
+                    <!-- Botón de acción -->
+                    <a class="btn btn-dark btn-lg" asp-action="Index">Ir a Productos</a>
+                </div>
+            </div>
+        </div>
+
     }
 </div>
 
