@@ -13,8 +13,13 @@
                 @if (Model?.ProductImages?.Count() == 1)
                 {
                     <!-- Mostrar única imagen si solo hay una -->
-                    <img src="@Model.ProductImages.First().ImageFullPath" class="card-img-top img-fluid"
-                         alt="@Model.Name" style="max-height: 500px; object-fit: contain;">
+
+
+                    <a href="@Model.ProductImages.First().ImageFullPath" data-lightbox="image-@Model.Id" data-title="@Model.Name" data-alt="@Model.Name">
+                        <img src="@Model.ProductImages.First().ImageFullPath" class="card-img-top img-fluid"
+                             data-lightbox="product-gallery" data-title="@Model.Name"
+                             alt="@Model.Name" style="max-height: 500px; object-fit: contain;">
+                    </a>
                 }
                 else if (Model?.ProductImages?.Count() > 1)
                 {
@@ -27,8 +32,10 @@
                             @foreach (var item in Model?.ProductImages)
                             {
                                 <div class="carousel-item @(first ? "active" : "")">
-                                    <img class="d-block w-100" src="@item.ImageFullPath" alt="@item.Id"
-                                         style="max-height: 500px; object-fit: contain;">
+                                    <a href="@item.ImageFullPath" data-lightbox="product-gallery" data-title="Imagen @item.Product.Name">
+                                        <img class="d-block w-100" src="@item.ImageFullPath" alt="@item.Product.Name"
+                                             style="max-height: 500px; min-height:350; object-fit: contain;">
+                                    </a>
                                 </div>
                                 first = false;
                             }
@@ -48,7 +55,8 @@
 
             </div>
             <!-- Description -->
-            <p class="mt-5 fs-5 fw-semibold">@Model?.Description</p>
+            <p class="mt-5 fs-3 fw-bold">Descripción</p>
+            <p class="mt-5 fs-4 fw-ligth">@Model?.Description</p>
 
         </div>
 
@@ -145,14 +153,25 @@
     </div>
 </div>
 
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
+
     <script type="text/javascript">
         $(document).ready(function () {
+            //  el carrusel de Bootstrap
             $("#ImagesCarousel").carousel();
+
+            // Configuración de Lightbox
+            lightbox.option({
+                'resizeDuration': 200,
+                'wrapAround': true, // Permite navegar en bucle entre las imágenes
+                'fadeDuration': 300, // Velocidad de aparición
+                'imageFadeDuration': 300
+            });
         });
     </script>
 }
