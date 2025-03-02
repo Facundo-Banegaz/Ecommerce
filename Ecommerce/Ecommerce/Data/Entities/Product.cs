@@ -8,13 +8,17 @@ namespace Ecommerce.Data.Entities
         public int Id { get; set; }
 
         [Display(Name = "Nombre")]
-        [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        [MaxLength(350, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Name { get; set; }
 
         [DataType(DataType.MultilineText)]
+        [Display(Name = "Titulo Descripción")]
+        [MaxLength(150, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        public string TitleDescription { get; set; }
+
+        [DataType(DataType.Text)]
         [Display(Name = "Descripción")]
-        [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         public string Description { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
@@ -26,7 +30,37 @@ namespace Ecommerce.Data.Entities
         [DisplayFormat(DataFormatString = "{0:N2}")]
         [Display(Name = "Inventario")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public float Stock { get; set; }
+        public int Stock { get; set; }
+
+
+
+        [Display(Name = "Estado del Producto")]
+        public bool Estate { get; set; } = true;
+
+
+        [Display(Name = "En Promoción")]
+        public bool IsPromoted { get; set; }
+
+
+
+        [Display(Name = "Descuento (%)")]
+        [Range(0, 100, ErrorMessage = "El descuento debe estar entre 0 y 100.")]
+        public decimal DiscountPercentage { get; set; }
+
+
+
+        [Display(Name = "Calificaciones")]
+        public ICollection<Rating> Ratings { get; set; } = new List<Rating>();
+
+        [Display(Name = "Calificación Promedio")]
+        public decimal AverageRating => Ratings.Any() ? (decimal)Ratings.Average(r => (int)r.Value) : 0;
+
+
+
+        [Display(Name = "Precio Final")]
+        public decimal FinalPrice => IsPromoted ? Price - (Price * (DiscountPercentage / 100)) : Price;
+
+
 
         public ICollection<ProductCategory> ProductCategories { get; set; }
 
@@ -38,7 +72,7 @@ namespace Ecommerce.Data.Entities
         [Display(Name = "Fotos")]
         public int ImagesNumber => ProductImages == null ? 0 : ProductImages.Count;
 
-        //TODO: Pending to change to the correct path
+
         [Display(Name = "Foto")]
         public string ImageFullPath => ProductImages == null || ProductImages.Count == 0
             ? $"https://localhost:7232/images/no-camera.png"
@@ -46,3 +80,4 @@ namespace Ecommerce.Data.Entities
 
     }
 }
+

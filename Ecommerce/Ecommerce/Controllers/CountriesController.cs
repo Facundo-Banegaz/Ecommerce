@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Ecommerce.Data;
+﻿using Ecommerce.Data;
 using Ecommerce.Data.Entities;
 using Ecommerce.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Controllers
 {
-   [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class CountriesController : Controller
     {
         private readonly DataContext _context;
@@ -21,7 +21,7 @@ namespace Ecommerce.Controllers
         public async Task<IActionResult> Index()
         {
 
-            
+
             return View(await _context.Countries.Include(pro => pro.States).ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace Ecommerce.Controllers
             }
 
             var country = await _context.Countries
-                .Include(c  => c.States)
+                .Include(c => c.States)
                 .ThenInclude(s => s.Cities)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (country == null)
@@ -54,7 +54,7 @@ namespace Ecommerce.Controllers
             }
 
             State state = await _context.States
-                .Include(c=> c.Country)
+                .Include(c => c.Country)
                 .Include(c => c.Cities)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -95,7 +95,7 @@ namespace Ecommerce.Controllers
 
             Country country = await _context.Countries.FirstAsync(m => m.Id == Id);
 
-            if (country == null) 
+            if (country == null)
             {
                 return NotFound();
             }
@@ -136,7 +136,7 @@ namespace Ecommerce.Controllers
 
                     _context.Add(state);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Details),new { Id = model.Countryid});
+                    return RedirectToAction(nameof(Details), new { Id = model.Countryid });
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
@@ -209,7 +209,7 @@ namespace Ecommerce.Controllers
 
                     City state = new City()
                     {
-                       
+
                         State = await _context.States.FindAsync(model.StateId),
                         Name = model.Name,
 
@@ -257,7 +257,7 @@ namespace Ecommerce.Controllers
             {
                 try
                 {
-                    
+
                     _context.Add(country);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -291,7 +291,7 @@ namespace Ecommerce.Controllers
                 return NotFound();
             }
 
-            State states = await _context.States.Include(c=> c.Country).FirstOrDefaultAsync(s=> s.Id == Id);
+            State states = await _context.States.Include(c => c.Country).FirstOrDefaultAsync(s => s.Id == Id);
 
             if (states == null)
             {
@@ -332,7 +332,7 @@ namespace Ecommerce.Controllers
 
                     _context.Update(State);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Details), new { Id= model.Countryid });
+                    return RedirectToAction(nameof(Details), new { Id = model.Countryid });
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
@@ -373,7 +373,7 @@ namespace Ecommerce.Controllers
             CityViewModel model = new CityViewModel()
             {
                 StateId = city.State.Id,
-                Id =  city.Id,
+                Id = city.Id,
                 Name = city.Name,
             };
 
@@ -437,7 +437,7 @@ namespace Ecommerce.Controllers
                 return NotFound();
             }
 
-            var country = await _context.Countries.Include(p=> p.States).FirstOrDefaultAsync(c=> c.Id == id);
+            var country = await _context.Countries.Include(p => p.States).FirstOrDefaultAsync(c => c.Id == id);
 
 
             if (country == null)
@@ -482,8 +482,8 @@ namespace Ecommerce.Controllers
                 {
                     ModelState.AddModelError(string.Empty, exception.Message);
                 }
-   
-               
+
+
             }
             return View(country);
         }
@@ -496,7 +496,7 @@ namespace Ecommerce.Controllers
                 return NotFound();
             }
 
-            var country = await _context.Countries.Include(c=> c.States).FirstOrDefaultAsync(m => m.Id == id);
+            var country = await _context.Countries.Include(c => c.States).FirstOrDefaultAsync(m => m.Id == id);
             if (country == null)
             {
                 return NotFound();
@@ -549,7 +549,7 @@ namespace Ecommerce.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Details), new { id = state.Country.Id});
+            return RedirectToAction(nameof(Details), new { id = state.Country.Id });
         }
 
 

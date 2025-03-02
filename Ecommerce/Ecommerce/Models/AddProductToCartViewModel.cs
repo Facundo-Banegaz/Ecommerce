@@ -8,13 +8,17 @@ namespace Ecommerce.Models
         public int Id { get; set; }
 
         [Display(Name = "Nombre")]
-        [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        [MaxLength(350, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Name { get; set; }
 
         [DataType(DataType.MultilineText)]
+        [Display(Name = "Titulo Descripción")]
+        [MaxLength(150, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        public string TituloDescription { get; set; }
+
+        [DataType(DataType.Text)]
         [Display(Name = "Descripción")]
-        [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         public string Description { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:C2}")]
@@ -25,7 +29,37 @@ namespace Ecommerce.Models
         [DisplayFormat(DataFormatString = "{0:N2}")]
         [Display(Name = "Inventario")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public float Stock { get; set; }
+        public int Stock { get; set; }
+
+
+
+
+        [Display(Name = "Estado del Producto")]
+        public bool Estate { get; set; } = true;
+
+        // **Promoción**
+        [Display(Name = "En Promoción")]
+        public bool IsPromoted { get; set; }
+
+
+        [Display(Name = "Descuento (%)")]
+        [Range(0, 100, ErrorMessage = "El descuento debe estar entre 0 y 100.")]
+        public decimal DiscountPercentage { get; set; }
+
+
+
+        public ICollection<Rating> Ratings { get; set; } = new List<Rating>();
+
+
+
+        [Display(Name = "Calificación Promedio")]
+        public decimal AverageRating => Ratings.Any() ? (decimal)Ratings.Average(rating => (int)rating) : 0;
+
+
+
+        [Display(Name = "Precio Final")]
+        public decimal FinalPrice => IsPromoted ? Price - (Price * (DiscountPercentage / 100)) : Price;
+
 
         [Display(Name = "Categorías")]
         public string Categories { get; set; }

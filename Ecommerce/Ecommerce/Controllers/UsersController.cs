@@ -1,12 +1,12 @@
-﻿using Ecommerce.Data.Entities;
+﻿using Ecommerce.Common;
 using Ecommerce.Data;
+using Ecommerce.Data.Entities;
 using Ecommerce.Enums;
 using Ecommerce.Helpers;
 using Ecommerce.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Ecommerce.Common;
 
 namespace Ecommerce.Controllers
 {
@@ -20,9 +20,9 @@ namespace Ecommerce.Controllers
         private readonly IBlobHelper _blobHelper;
         private readonly IMailHelper _mailHelper;
 
-        public UsersController(IUserHelper userHelper, DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper,IMailHelper mailHelper)
+        public UsersController(IUserHelper userHelper, DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper, IMailHelper mailHelper)
         {
-           this._userHelper = userHelper;
+            this._userHelper = userHelper;
             this._context = context;
             this._combosHelper = combosHelper;
             this._blobHelper = blobHelper;
@@ -156,7 +156,7 @@ namespace Ecommerce.Controllers
 
             return View(new LoginViewModel());
         }
-    
+
 
     }
 }

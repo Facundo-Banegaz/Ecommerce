@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Ecommerce.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class CategoriesController: Controller
+    public class CategoriesController : Controller
     {
         private readonly DataContext _context;
 
@@ -59,7 +59,7 @@ namespace Ecommerce.Controllers
             {
                 try
                 {
-                  
+
                     _context.Add(category);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));

@@ -13,7 +13,7 @@ namespace Ecommerce.Helpers
             _configuration = configuration;
         }
 
-       
+
 
         public Response SendMail(string toName, string toEmail, string subject, string body)
         {

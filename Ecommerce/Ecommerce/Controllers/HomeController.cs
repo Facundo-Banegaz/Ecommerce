@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Ecommerce.Data;
 using Ecommerce.Data.Entities;
 using Ecommerce.Helpers;
@@ -12,7 +11,7 @@ namespace Ecommerce.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly   DataContext _context;
+        private readonly DataContext _context;
         private readonly IUserHelper _userHelper;
 
         public HomeController(ILogger<HomeController> logger, DataContext context, IUserHelper userHelper)

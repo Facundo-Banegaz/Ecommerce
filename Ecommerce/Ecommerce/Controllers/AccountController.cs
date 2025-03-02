@@ -4,11 +4,9 @@ using Ecommerce.Data.Entities;
 using Ecommerce.Enums;
 using Ecommerce.Helpers;
 using Ecommerce.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Mono.TextTemplating;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace Ecommerce.Controllers
@@ -109,7 +107,7 @@ namespace Ecommerce.Controllers
             if (ModelState.IsValid)
             {
                 Guid imageId = Guid.Empty;
-               
+
 
                 if (model.ImageFile != null)
                 {
@@ -118,7 +116,7 @@ namespace Ecommerce.Controllers
 
 
                 model.ImageId = imageId;
-             
+
 
                 User user = await _userHelper.AddUserAsync(model);
 
@@ -240,7 +238,7 @@ namespace Ecommerce.Controllers
             if (ModelState.IsValid)
             {
                 Guid imageId = model.ImageId;
-                
+
                 if (model.ImageFile != null)
                 {
                     imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
@@ -351,7 +349,7 @@ namespace Ecommerce.Controllers
 
                 string myToken = await _userHelper.GeneratePasswordResetTokenAsync(user);
 
-        
+
 
                 // Generar el enlace para resetear la contraseña
                 string link = Url.Action(
@@ -385,10 +383,10 @@ namespace Ecommerce.Controllers
                     ViewBag.Message = "Las instrucciones para recuperar la contraseña han sido enviadas a su correo.";
                     return View();
                 }
-               
-                
-                    ModelState.AddModelError(string.Empty, "Hubo un error al intentar enviar el correo.");
-                    
+
+
+                ModelState.AddModelError(string.Empty, "Hubo un error al intentar enviar el correo.");
+
             }
 
             return View(model);

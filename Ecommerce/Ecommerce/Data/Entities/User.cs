@@ -1,11 +1,10 @@
 ﻿using Ecommerce.Enums;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ecommerce.Data.Entities
 {
-    public class User: IdentityUser
+    public class User : IdentityUser
     {
         [Display(Name = "Documento")]
         [MaxLength(20, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
@@ -49,5 +48,9 @@ namespace Ecommerce.Data.Entities
         [Display(Name = "Usuario")]
         public string FullNameWithDocument => $"{FirstName} {LastName} - {Document}";
 
+
+        public ICollection<Wishlist> Wishlist { get; set; } = new List<Wishlist>();
+
+        public ICollection<Rating> Ratings { get; set; } = new List<Rating>();
     }
 }

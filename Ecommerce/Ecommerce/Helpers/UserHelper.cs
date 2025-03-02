@@ -3,7 +3,6 @@ using Ecommerce.Data.Entities;
 using Ecommerce.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Ecommerce.Helpers
 {
@@ -15,7 +14,7 @@ namespace Ecommerce.Helpers
         private readonly SignInManager<User> _signInManager;
         public UserHelper(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)
         {
-            
+
             this._context = context;
             this._userManager = userManager;
             this._roleManager = roleManager;

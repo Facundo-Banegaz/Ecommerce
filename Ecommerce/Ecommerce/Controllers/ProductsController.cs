@@ -275,8 +275,8 @@ namespace Ecommerce.Controllers
             }
 
             Product product = await _context.Products
-                .Include(p=> p.ProductCategories)
-                .ThenInclude(pc=> pc.Category)
+                .Include(p => p.ProductCategories)
+                .ThenInclude(pc => pc.Category)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             if (product == null)
@@ -284,9 +284,9 @@ namespace Ecommerce.Controllers
                 return NotFound();
             }
 
-            List<Category> categories = product.ProductCategories.Select(pc => new Category 
-            { 
-            
+            List<Category> categories = product.ProductCategories.Select(pc => new Category
+            {
+
                 Id = pc.Category.Id,
                 Name = pc.Category.Name,
 
@@ -316,7 +316,7 @@ namespace Ecommerce.Controllers
 
             if (ModelState.IsValid)
             {
-               
+
                 ProductCategory productCategory = new()
                 {
                     Category = await _context.Categories.FindAsync(model.CategoryId),
@@ -335,7 +335,7 @@ namespace Ecommerce.Controllers
                 }
 
             }
-        
+
             List<Category> categories = product.ProductCategories.Select(pc => new Category
             {
 
@@ -369,7 +369,7 @@ namespace Ecommerce.Controllers
             return RedirectToAction(nameof(Details), new { Id = productCategory.Product.Id });
         }
 
-        
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -399,7 +399,7 @@ namespace Ecommerce.Controllers
                 .Include(p => p.ProductCategories)
                 .FirstOrDefaultAsync(p => p.Id == model.Id);
 
-            
+
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 

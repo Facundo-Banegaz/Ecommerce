@@ -1,5 +1,4 @@
-﻿using Ecommerce.Controllers;
-using Ecommerce.Data.Entities;
+﻿using Ecommerce.Data.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Ecommerce.Helpers

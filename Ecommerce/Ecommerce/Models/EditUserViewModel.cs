@@ -1,8 +1,5 @@
-﻿using Ecommerce.Data.Entities;
-using Ecommerce.Enums;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ecommerce.Models
 {

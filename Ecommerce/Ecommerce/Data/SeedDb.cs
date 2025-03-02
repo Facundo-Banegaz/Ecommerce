@@ -2,7 +2,6 @@
 using Ecommerce.Enums;
 using Ecommerce.Helpers;
 using Microsoft.EntityFrameworkCore;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Ecommerce.Data
 {
@@ -18,7 +17,7 @@ namespace Ecommerce.Data
             this._context = context;
             this._userHelper = userHelper;
             this._blobHelper = blobHelper;
-     
+
         }
 
         public async Task SeedAsync()
@@ -27,8 +26,8 @@ namespace Ecommerce.Data
             await CheckCountriesAsync();
             await CheckCategoriesAsync();
             await CheckRolesAsync();
-            await CheckUserAsync("44134", "Facundo", "Banegaz", "facu@yopmail.com", "567 488 1156", "Calle Siempre Viva","admin.png", UserType.Admin);
-            await CheckUserAsync("33699", "Francisco", "Banegaz", "fran@yopmail.com", "154 344 6691", "Calle 25 de Mayo", "user.webp",UserType.User);
+            await CheckUserAsync("44134", "Facundo", "Banegaz", "facu@yopmail.com", "567 488 1156", "Calle Siempre Viva", "admin.png", UserType.Admin);
+            await CheckUserAsync("33699", "Francisco", "Banegaz", "fran@yopmail.com", "154 344 6691", "Calle 25 de Mayo", "user.webp", UserType.User);
             await CheckProductsAsync();
         }
 
@@ -37,43 +36,41 @@ namespace Ecommerce.Data
         {
             if (!_context.Products.Any())
             {
-                await AddProductAsync("Adidas Barracuda", 270000M, 12F, new List<string>() { "Calzado", "Deportes" }, new List<string>() { "adidas_barracuda.jpeg" });
-                await AddProductAsync("Adidas Superstar", 250000M, 12F, new List<string>() { "Calzado", "Deportes" }, new List<string>() { "Adidas_superstar.jpeg" });
-                await AddProductAsync("AirPods", 1300000M, 12F, new List<string>() { "Tecnología", "Apple" }, new List<string>() { "airpos.jpeg", "airpos2.png" });
-                await AddProductAsync("Audifonos Bose", 870000M, 12F, new List<string>() { "Tecnología" }, new List<string>() { "audifonos_bose.jpeg" });
-                await AddProductAsync("Bicicleta Ribble", 12000000M, 6F, new List<string>() { "Deportes" }, new List<string>() { "bicicleta_bmx.png" });
-                await AddProductAsync("Camisa Cuadros", 56000M, 24F, new List<string>() { "Ropa" }, new List<string>() { "camisa_cuadros.png" });
-                await AddProductAsync("Casco Bicicleta", 820000M, 12F, new List<string>() { "Deportes" }, new List<string>() { "casco_bicicleta.png", "casco.webp" });
-                await AddProductAsync("iPad", 2300000M, 6F, new List<string>() { "Tecnología", "Apple" }, new List<string>() { "ipad.png","ipad2.jpg" });
-                await AddProductAsync("iPhone 13", 5200000M, 6F, new List<string>() { "Tecnología", "Apple" }, new List<string>() { "iphone16.png", "iphone16b.png", "iphone16c.webp", "iphone16d.png" });
-                await AddProductAsync("Mac Book Pro", 12100000M, 6F, new List<string>() { "Tecnología", "Apple" }, new List<string>() { "mac_book_pro.png" });
-                await AddProductAsync("Mancuernas", 370000M, 12F, new List<string>() { "Deportes" }, new List<string>() { "mancuernas.png" });
-       
-                await AddProductAsync("New Balance 530", 180000M, 12F, new List<string>() { "Calzado", "Deportes" }, new List<string>() { "newbalance530.webp" });
-              
-                await AddProductAsync("Nike Air", 233000M, 12F, new List<string>() { "Calzado", "Deportes" }, new List<string>() { "nike_air.png" });
-                await AddProductAsync("Nike Zoom", 249900M, 12F, new List<string>() { "Calzado", "Deportes" }, new List<string>() { "nike_zoom.jpeg" });
-                await AddProductAsync("Buso Adidas Mujer", 134000M, 12F, new List<string>() { "Ropa", "Deportes" }, new List<string>() { "buso_adidas.png" });
-                await AddProductAsync("Wey Protein", 15600M, 12F, new List<string>() { "Nutrición" }, new List<string>() { "wey-protein.webp" });
-                await AddProductAsync("Creatina 250grs Micronizada", 252000M, 12F, new List<string>() { "Nutrición" }, new List<string>() { "creatina.webp" });
-                await AddProductAsync("Arnes Mascota", 25000M, 12F, new List<string>() { "Mascotas" }, new List<string>() { "arnes_mascota.webp" });
-                await AddProductAsync("Cama Mascota", 99000M, 12F, new List<string>() { "Mascotas" }, new List<string>() { "cama_mascota.webp" });
-                await AddProductAsync("Teclado Gamer", 67000M, 12F, new List<string>() { "Gamer", "Tecnología" }, new List<string>() { "teclado_gamer.jpeg" });
-                await AddProductAsync("Silla Gamer", 980000M, 12F, new List<string>() { "Gamer", "Tecnología" }, new List<string>() { "silla_gamer.png" });
-                await AddProductAsync("Mouse Gamer", 132000M, 12F, new List<string>() { "Gamer", "Tecnología" }, new List<string>() { "mouse_gamer.png" });
+                await AddProductAsync("Xtrenght - Bcaa Pro En Cápsulas Nutrition De 200g", 140000M, 2, new List<string>() { "Amino / BCAA" }, new List<string>() { "aminoacidos_bcaa.webp" });
+                await AddProductAsync("Xtrenght - Best Whey de 907g Proteina con creatina", 260000M, 17, new List<string>() { "Proteínas" }, new List<string>() { "proteinabest.webp" });
+                await AddProductAsync("Xtrenght - Creatina 250grs Micronizada", 150000M, 9, new List<string>() { "Creatina" }, new List<string>() { "creatina_monohidratada.webp" });
+                await AddProductAsync("Cellucor - C4 Pre Workout X 60 Servicios", 220000M, 7, new List<string>() { "Pre Entreno" }, new List<string>() { "pre_entreno_c4.webp" });
+                await AddProductAsync("Star nutrition - Colageno Hydrolizado X210 Gr. Suplemento", 180000M, 77, new List<string>() { "Colágeno" }, new List<string>() { "colageno_hidrolizado.webp" });
+                await AddProductAsync("Star Nutri - Iron Pack Multivitamin Powder - 44 Serv - 383 Gr - Sabor Fruit Punch", 140000M, 55, new List<string>() { "Vitaminas" }, new List<string>() { "multivitaminas.webp" });
+
+                await AddProductAsync("Nutremax - Hydromax Sport Drink Bebida Deportiva Isotonica En Pote 1,5 Kg", 50000M, 5, new List<string>() { "Bebidas Hidratantes" }, new List<string>() { "bebida_isotonica.webp" });
+                await AddProductAsync("Star nutrition - Oxido Nítrico Steam N.O Arginina 312 Grs", 210000M, 42, new List<string>() { "Óxido Nítrico" }, new List<string>() { "oxido_nitroso.webp" });
+                await AddProductAsync("Star nutrition - Glutamina Micronizada X 300grs", 130000M, 4, new List<string>() { "Glutamina" }, new List<string>() { "glutamina.webp" });
+                await AddProductAsync("Combo Advance Whey + Creatina Xtrenght 250gr", 300000M, 1, new List<string>() { "Combos" }, new List<string>() { "combo_suplementos.webp" });
+                await AddProductAsync("Xtrenght - Nitrogain 1.5kg Ganador De Peso", 400000M, 111, new List<string>() { "Ganadores de Peso" }, new List<string>() { "ganador_peso.webp" });
+                await AddProductAsync("Que lo Paleo Caja de Barritas x 24 Unidades", 20000M, 11, new List<string>() { "Barritas Proteicas" }, new List<string>() { "barritas_proteicas_x.webp" });
+                await AddProductAsync("Nutrex Research Series Lipo-6 Black Ultra Concentrate en pote con 60 cápsulas sin sabor", 250000M, 22, new List<string>() { "Quemadores de Grasa" }, new List<string>() { "quemadores.webp" });
+                await AddProductAsync("Star Nutrition - 2x1 V8", 150000M, 12, new List<string>() { "Energizantes" }, new List<string>() { "energizante.webp" });
+
+
                 await _context.SaveChangesAsync();
             }
         }
 
 
-        private async Task AddProductAsync(string name, decimal price, float stock, List<string> categories, List<string> images)
+        private async Task AddProductAsync(string name, decimal price, int stock, List<string> categories, List<string> images)
         {
             Product prodcut = new()
             {
+                TitleDescription = name,
                 Description = name,
                 Name = name,
                 Price = price,
                 Stock = stock,
+                Estate = stock > 0,
+                IsPromoted = false,
+                DiscountPercentage = 0,
+                Ratings = new List<Rating>(),
                 ProductCategories = new List<ProductCategory>(),
                 ProductImages = new List<ProductImage>()
             };
@@ -94,92 +91,36 @@ namespace Ecommerce.Data
         }
 
 
+
         private async Task CheckCategoriesAsync()
         {
             if (!_context.Categories.Any())
             {
-                _context.Categories.Add(new Category { Name = "Tecnología" });
-                _context.Categories.Add(new Category { Name = "Ropa" });
-                _context.Categories.Add(new Category { Name = "Gamer" });
-                _context.Categories.Add(new Category { Name = "Belleza" });
-                _context.Categories.Add(new Category { Name = "Nutrición" });
-                _context.Categories.Add(new Category { Name = "Samsung" });
-                _context.Categories.Add(new Category { Name = "Apple" });
-                _context.Categories.Add(new Category { Name = "Calzado" });
-                _context.Categories.Add(new Category { Name = "Deportes" });
-                _context.Categories.Add(new Category { Name = "Mascotas" });
+                _context.Categories.Add(new Category { Name = "Amino / BCAA" });
+                _context.Categories.Add(new Category { Name = "Proteínas" });
+                _context.Categories.Add(new Category { Name = "Creatina" });
+                _context.Categories.Add(new Category { Name = "Pre Entreno" });
+                _context.Categories.Add(new Category { Name = "Colágeno" });
+                _context.Categories.Add(new Category { Name = "Vitaminas" });
+                _context.Categories.Add(new Category { Name = "Bebidas Hidratantes" });
+                _context.Categories.Add(new Category { Name = "Óxido Nítrico" });
+                _context.Categories.Add(new Category { Name = "Glutamina" });
+                _context.Categories.Add(new Category { Name = "Combos" });
+                _context.Categories.Add(new Category { Name = "Ganadores de Peso" });
+                _context.Categories.Add(new Category { Name = "Barritas Proteicas" });
+                _context.Categories.Add(new Category { Name = "Quemadores de Grasa" });
+                _context.Categories.Add(new Category { Name = "Energizantes" });
+
 
             }
 
             await _context.SaveChangesAsync();
         }
-        /*
-         Colombia, EEUU, Argentina, Chile,Uruguay, Brasil 
-         */
+
         private async Task CheckCountriesAsync()
         {
             if (!_context.Countries.Any())
             {
-                _context.Countries.Add(new Country
-                {
-                    Name = "Colombia",
-                    States = new List<State>()
-            {
-                new State()
-                {
-                    Name = "Antioquia",
-                    Cities = new List<City>() {
-                        new City() { Name = "Medellín" },
-                        new City() { Name = "Itagüí" },
-                        new City() { Name = "Envigado" },
-                        new City() { Name = "Bello" },
-                        new City() { Name = "Rionegro" },
-                    }
-                },
-                new State()
-                {
-                    Name = "Bogotá",
-                    Cities = new List<City>() {
-                        new City() { Name = "Usaquén" },
-                        new City() { Name = "Chapinero" },
-                        new City() { Name = "Santa Fe" },
-                        new City() { Name = "Usme" },
-                        new City() { Name = "Bosa" },
-                    }
-                },
-            }
-                });
-
-                _context.Countries.Add(new Country
-                {
-                    Name = "Estados Unidos",
-                    States = new List<State>()
-            {
-                new State()
-                {
-                    Name = "Florida",
-                    Cities = new List<City>() {
-                        new City() { Name = "Orlando" },
-                        new City() { Name = "Miami" },
-                        new City() { Name = "Tampa" },
-                        new City() { Name = "Fort Lauderdale" },
-                        new City() { Name = "Key West" },
-                    }
-                },
-                new State()
-                {
-                    Name = "Texas",
-                    Cities = new List<City>() {
-                        new City() { Name = "Houston" },
-                        new City() { Name = "San Antonio" },
-                        new City() { Name = "Dallas" },
-                        new City() { Name = "Austin" },
-                        new City() { Name = "El Paso" },
-                    }
-                },
-            }
-                });
-
                 _context.Countries.Add(new Country
                 {
                     Name = "Argentina",
@@ -188,120 +129,274 @@ namespace Ecommerce.Data
                 new State()
                 {
                     Name = "Buenos Aires",
-                    Cities = new List<City>() {
+                    Cities = new List<City>()
+                    {
                         new City() { Name = "La Plata" },
                         new City() { Name = "Mar del Plata" },
                         new City() { Name = "Bahía Blanca" },
                         new City() { Name = "Tigre" },
                         new City() { Name = "San Nicolás" },
+                        new City() { Name = "Pergamino" },
+                        new City() { Name = "Morón" },
+                    }
+                },
+                new State()
+                {
+                    Name = "CABA",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "Ciudad Autónoma de Buenos Aires" }
                     }
                 },
                 new State()
                 {
                     Name = "Córdoba",
-                    Cities = new List<City>() {
+                    Cities = new List<City>()
+                    {
                         new City() { Name = "Córdoba" },
                         new City() { Name = "Villa María" },
                         new City() { Name = "Río Cuarto" },
                         new City() { Name = "Carlos Paz" },
                         new City() { Name = "Alta Gracia" },
+                        new City() { Name = "Cruz del Eje" },
                     }
                 },
-            }
-                });
-
-                _context.Countries.Add(new Country
-                {
-                    Name = "Chile",
-                    States = new List<State>()
-            {
                 new State()
                 {
-                    Name = "Región Metropolitana",
-                    Cities = new List<City>() {
-                        new City() { Name = "Santiago" },
-                        new City() { Name = "Puente Alto" },
+                    Name = "Santa Fe",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "Rosario" },
+                        new City() { Name = "Santa Fe" },
+                        new City() { Name = "Rafaela" },
+                        new City() { Name = "Venado Tuerto" },
+                        new City() { Name = "Reconquista" },
+                        new City() { Name = "San Lorenzo" },
+                    }
+                },
+                new State()
+                {
+                    Name = "Mendoza",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "Mendoza" },
+                        new City() { Name = "San Rafael" },
+                        new City() { Name = "Godoy Cruz" },
                         new City() { Name = "Maipú" },
-                        new City() { Name = "Las Condes" },
-                        new City() { Name = "La Florida" },
+                        new City() { Name = "Tunuyán" },
                     }
                 },
                 new State()
                 {
-                    Name = "Valparaíso",
-                    Cities = new List<City>() {
-                        new City() { Name = "Valparaíso" },
-                        new City() { Name = "Viña del Mar" },
-                        new City() { Name = "Quilpué" },
-                        new City() { Name = "Villa Alemana" },
-                        new City() { Name = "San Antonio" },
+                    Name = "Tucumán",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "San Miguel de Tucumán" },
+                        new City() { Name = "Tafí Viejo" },
+                        new City() { Name = "Concepción" },
+                        new City() { Name = "Yerba Buena" },
+                    }
+                },
+                new State()
+                {
+                    Name = "Salta",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "Salta" },
+                        new City() { Name = "San José de Metán" },
+                        new City() { Name = "Rosario de la Frontera" },
+                        new City() { Name = "Cafayate" },
+                    }
+                },
+                new State()
+                {
+                    Name = "Chaco",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "Resistencia" },
+                        new City() { Name = "Sáenz Peña" },
+                        new City() { Name = "Villa Ángela" },
+                        new City() { Name = "Charata" },
+                    }
+                },
+                new State()
+                {
+                    Name = "Corrientes",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "Corrientes" },
+                        new City() { Name = "Goya" },
+                        new City() { Name = "Mercedes" },
+                        new City() { Name = "Esquina" },
+                    }
+                },
+                new State()
+                {
+                    Name = "Misiones",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "Posadas" },
+                        new City() { Name = "Oberá" },
+                        new City() { Name = "Eldorado" },
+                        new City() { Name = "Apóstoles" },
+                    }
+                },
+                new State()
+                {
+                    Name = "Neuquén",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "Neuquén" },
+                        new City() { Name = "Plottier" },
+                        new City() { Name = "Zapala" },
+                        new City() { Name = "Chos Malal" },
+                    }
+                },
+                new State()
+                {
+                    Name = "Río Negro",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "Viedma" },
+                        new City() { Name = "Cipolletti" },
+                        new City() { Name = "General Roca" },
+                        new City() { Name = "Catriel" },
+                    }
+                },
+                new State()
+                {
+                    Name = "San Juan",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "San Juan" },
+                        new City() { Name = "Rivadavia" },
+                        new City() { Name = "Chimbas" },
+                        new City() { Name = "Rawson" },
+                    }
+                },
+                new State()
+                {
+                    Name = "San Luis",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "San Luis" },
+                        new City() { Name = "Villa Mercedes" },
+                        new City() { Name = "Merlo" },
+                        new City() { Name = "La Punta" },
+                    }
+                },
+                new State()
+                {
+                    Name = "La Pampa",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "Santa Rosa" },
+                        new City() { Name = "General Pico" },
+                        new City() { Name = "Toay" },
+                        new City() { Name = "Realicó" },
+                    }
+                },
+                new State()
+                {
+                    Name = "La Rioja",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "La Rioja" },
+                        new City() { Name = "Chilecito" },
+                        new City() { Name = "Villa Union" },
+                        new City() { Name = "Famatina" },
+                    }
+                },
+                new State()
+                {
+                    Name = "Santiago del Estero",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "Santiago del Estero" },
+                        new City() { Name = "Termas de Río Hondo" },
+                        new City() { Name = "Añatuya" },
+                        new City() { Name = "Frías" },
+                    }
+                },
+                new State()
+                {
+                    Name = "Formosa",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "Formosa" },
+                        new City() { Name = "Pirané" },
+                        new City() { Name = "Clorinda" },
+                        new City() { Name = "Herradura" },
+                    }
+                },
+                new State()
+                {
+                    Name = "Chubut",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "Rawson" },
+                        new City() { Name = "Trelew" },
+                        new City() { Name = "Comodoro Rivadavia" },
+                        new City() { Name = "Puerto Madryn" },
+                    }
+                },
+                new State()
+                {
+                    Name = "Santa Cruz",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "Río Gallegos" },
+                        new City() { Name = "El Calafate" },
+                        new City() { Name = "Puerto Deseado" },
+                    }
+                },
+                new State()
+                {
+                    Name = "Tierra del Fuego",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "Ushuaia" },
+                        new City() { Name = "Río Grande" },
+                    }
+                },
+                new State()
+                {
+                    Name = "Jujuy",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "San Salvador de Jujuy" },
+                        new City() { Name = "Palpalá" },
+                        new City() { Name = "Perico" },
+                        new City() { Name = "La Quiaca" },
+                    }
+                },
+                new State()
+                {
+                    Name = "Catamarca",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "San Fernando del Valle de Catamarca" },
+                        new City() { Name = "Chumbicha" },
+                        new City() { Name = "Belén" },
+                        new City() { Name = "Andalgalá" },
+                    }
+                },
+                new State()
+                {
+                    Name = "Misiones",
+                    Cities = new List<City>()
+                    {
+                        new City() { Name = "Posadas" },
+                        new City() { Name = "Oberá" },
+                        new City() { Name = "Eldorado" },
+                        new City() { Name = "Apóstoles" },
                     }
                 },
             }
                 });
 
-                _context.Countries.Add(new Country
-                {
-                    Name = "Uruguay",
-                    States = new List<State>()
-            {
-                new State()
-                {
-                    Name = "Montevideo",
-                    Cities = new List<City>() {
-                        new City() { Name = "Montevideo" },
-                        new City() { Name = "Punta Carretas" },
-                        new City() { Name = "Ciudad Vieja" },
-                        new City() { Name = "Pocitos" },
-                        new City() { Name = "Malvín" },
-                    }
-                },
-                new State()
-                {
-                    Name = "Maldonado",
-                    Cities = new List<City>() {
-                        new City() { Name = "Punta del Este" },
-                        new City() { Name = "Maldonado" },
-                        new City() { Name = "San Carlos" },
-                        new City() { Name = "Piriápolis" },
-                        new City() { Name = "Aiguá" },
-                    }
-                },
+                await _context.SaveChangesAsync();
             }
-                });
-
-                _context.Countries.Add(new Country
-                {
-                    Name = "Brasil",
-                    States = new List<State>()
-            {
-                new State()
-                {
-                    Name = "São Paulo",
-                    Cities = new List<City>() {
-                        new City() { Name = "São Paulo" },
-                        new City() { Name = "Campinas" },
-                        new City() { Name = "Santos" },
-                        new City() { Name = "São Bernardo do Campo" },
-                        new City() { Name = "Ribeirão Preto" },
-                    }
-                },
-                new State()
-                {
-                    Name = "Río de Janeiro",
-                    Cities = new List<City>() {
-                        new City() { Name = "Río de Janeiro" },
-                        new City() { Name = "Niterói" },
-                        new City() { Name = "Nova Iguaçu" },
-                        new City() { Name = "Petrópolis" },
-                        new City() { Name = "Volta Redonda" },
-                    }
-                },
-            }
-                });
-            }
-
-            await _context.SaveChangesAsync();
         }
 
 
@@ -329,11 +424,33 @@ namespace Ecommerce.Data
                     PhoneNumber = phone,
                     Address = address,
                     Document = document,
-                    ImageId = imageId ,
+                    ImageId = imageId,
                     City = _context.Cities.FirstOrDefault(),
                     UserType = userType,
                 };
+                // Solo para usuarios tipo "User"
+                if (userType == UserType.User)
+                {
+                    // Obtener el producto con Id 1
+                    var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == 1);
 
+                    // Verificar que el producto existe
+                    if (product != null)
+                    {
+                        // Crear la calificación para el usuario y producto
+                        var rating = new Rating
+                        {
+                            Value = RatingValue.Excellent, // O RatingValue.5
+                            Comment = "Excelente producto", // O puedes personalizar este comentario
+                            Product = product,
+                            User = user,
+                            Date = DateTime.UtcNow // Establecer la fecha de la calificación si es necesario
+                        };
+
+                        // Agregar la calificación a la lista de calificaciones del usuario
+                        user.Ratings.Add(rating);
+                    }
+                }
                 await _userHelper.AddUserAsync(user, "facu1234");
                 await _userHelper.AddUserToRoleAsync(user, userType.ToString());
 
@@ -345,13 +462,20 @@ namespace Ecommerce.Data
             return user;
         }
 
+
+
+
+
         private async Task CheckRolesAsync()
         {
             await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
             await _userHelper.CheckRoleAsync(UserType.User.ToString());
         }
 
-    
+
+
+
+
 
     }
 }

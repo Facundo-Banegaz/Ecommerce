@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Data
 {
-    public class DataContext: IdentityDbContext<User>
+    public class DataContext : IdentityDbContext<User>
     {
-        public DataContext(DbContextOptions<DataContext> options)  : base(options)
-        {    
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
         }
 
 
@@ -25,7 +25,11 @@ namespace Ecommerce.Data
         public DbSet<ProductImage> ProductImages { get; set; }
 
         public DbSet<TemporalSale> TemporalSales { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
 
+        public DbSet<Wishlist> Wishlist { get; set; }
+
+        public DbSet<Marca> Marcas { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -35,13 +39,19 @@ namespace Ecommerce.Data
 
             modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
 
+            modelBuilder.Entity<Marca>().HasIndex(c => c.Name).IsUnique();
+
+
             modelBuilder.Entity<State>().HasIndex("Name", "CountryId").IsUnique();
 
-            modelBuilder.Entity<City>().HasIndex("Name","StateId").IsUnique();
+            modelBuilder.Entity<City>().HasIndex("Name", "StateId").IsUnique();
 
             modelBuilder.Entity<Product>().HasIndex(c => c.Name).IsUnique();
 
             modelBuilder.Entity<ProductCategory>().HasIndex("ProductId", "CategoryId").IsUnique();
+
+
+
         }
 
 

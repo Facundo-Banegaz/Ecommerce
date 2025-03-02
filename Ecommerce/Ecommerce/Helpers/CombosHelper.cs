@@ -12,7 +12,7 @@ namespace Ecommerce.Helpers
 
         public CombosHelper(DataContext context)
         {
-                
+
             _context = context;
         }
 
@@ -42,9 +42,9 @@ namespace Ecommerce.Helpers
 
             List<Category> categories = await _context.Categories.ToListAsync();
             List<Category> categoriesFiltered = new();
-            foreach (Category category in categories) 
+            foreach (Category category in categories)
             {
-                if(!filter.Any(c=> c.Id == category.Id))    
+                if (!filter.Any(c => c.Id == category.Id))
                 {
                     categoriesFiltered.Add(category);
                 }

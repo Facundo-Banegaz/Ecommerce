@@ -1,7 +1,6 @@
 ﻿
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
-using System.IO;
 
 namespace Ecommerce.Helpers
 {
@@ -29,10 +28,10 @@ namespace Ecommerce.Helpers
                 CloudBlockBlob blockBlob = container.GetBlockBlobReference($"{id}");
                 await blockBlob.DeleteAsync();
             }
-            catch 
+            catch
             {
 
-               
+
             }
 
         }

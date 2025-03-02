@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Ecommerce.Models
 {
-    public class CreateProductViewModel : EditProductViewModel 
+    public class CreateProductViewModel : EditProductViewModel
     {
         [Display(Name = "Categoría")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una categoría.")]
