@@ -31,7 +31,8 @@ namespace Ecommerce.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int Stock { get; set; }
 
-
+        [Display(Name = "Marca")]
+        public Brand Brand { get; set; }
 
 
         [Display(Name = "Estado del Producto")]

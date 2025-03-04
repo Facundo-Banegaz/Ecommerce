@@ -51,8 +51,12 @@
                 }
             </div>
             <!-- Description -->
+            <p class="mt-5 fs-3 fw-bold">Categorias</p>
+            <p class="h4 mb-3 fw-medium"> @Model?.Categories</h2>
+
             <p class="mt-5 fs-3 fw-bold">Descripción</p>
-            <p class="mt-5 fs-4 fw-light">@Model?.Description</p>
+            <p class="fs-4 fw-medium">@Model.TituloDescription</p>
+            <p class="fs-4 fw-light">@Model?.Description</p>
         </div>
 
         <!-- Product Details -->
@@ -60,33 +64,30 @@
             <!-- Nombre del producto -->
             <h2 class="h2 mb-3 fw-bold">@Model?.Name</h2>
 
-            <!-- Marca del producto -->
-            <div class="mb-3 text-muted">
-                <strong>Marca:</strong> @Model?.Brand.Name
-            </div>
+            <h2 class="h3 mb-3 fw-medium"><strong class="fw-bolder">Marca:</strong>  @Model?.Brand.Name</h2>
 
-            <div class="mb-3">
+            <div class="price-section">
                 @if (Model?.IsPromoted == true)
                 {
                     <div>
-                        <small class="text-decoration-line-through text-danger fw-bold">
-                            @Model?.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
+                        <small class="text-decoration-line-through text-danger">
+                            @Model.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
                         </small>
                     </div>
                     <div>
-                        <span class="fs-4 fw-bold me-2">
-                            @Model?.FinalPrice.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
+                        <span class="text-success fw-bold">
+                            @Model.FinalPrice.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
                         </span>
                         <span class="badge bg-primary">
-                            @((Model?.DiscountPercentage).ToString("0") + "% OFF")
+                            @((Model.DiscountPercentage).ToString("0") + "% OFF")
                         </span>
                     </div>
                 }
                 else
                 {
                     <div>
-                        <span class="fs-4 fw-bold me-2">
-                            @Model?.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
+                        <span class="text-success fw-bold">
+                            @Model.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
                         </span>
                     </div>
                 }
@@ -105,18 +106,8 @@
                 </div>
             </div>
 
-            <!-- Color Selection -->
-            <div class="mb-4">
-                <h6 class="mb-2">Color</h6>
-                <div class="btn-group" role="group">
-                    <input type="radio" class="btn-check" name="color" id="silver" checked>
-                    <label class="btn btn-outline-secondary" for="silver">Silver</label>
-                    <input type="radio" class="btn-check" name="color" id="gold">
-                    <label class="btn btn-outline-secondary" for="gold">Gold</label>
-                    <input type="radio" class="btn-check" name="color" id="black">
-                    <label class="btn btn-outline-secondary" for="black">Black</label>
-                </div>
-            </div>
+
+            
 
             <!-- Additional Info -->
             <div class="mt-4">

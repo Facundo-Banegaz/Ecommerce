@@ -108,10 +108,11 @@ namespace Ecommerce.Controllers
             }
 
             Product product = await _context.Products
-                .Include(b => b.Brand)
+                
                 .Include(p => p.ProductImages)
                 .Include(p => p.ProductCategories)
                 .ThenInclude(pc => pc.Category)
+                .Include(b => b.Brand)
                 .FirstOrDefaultAsync(p => p.Id == id);
             if (product == null)
             {
@@ -124,18 +125,24 @@ namespace Ecommerce.Controllers
             {
                 categories += $"{category.Category.Name}, ";
             }
+
             categories = categories.Substring(0, categories.Length - 2);
 
             AddProductToCartViewModel model = new()
             {
                 Categories = categories,
+                TituloDescription = product.TitleDescription,
                 Description = product.Description,
                 Id = product.Id,
                 Name = product.Name,
                 Price = product.Price,
+                IsPromoted = product.IsPromoted,
                 ProductImages = product.ProductImages,
+                DiscountPercentage = product.DiscountPercentage,
                 Quantity = 1,
                 Stock = product.Stock,
+                Brand = product.Brand,
+               
             };
 
             return View(model);
