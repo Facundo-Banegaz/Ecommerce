@@ -48,9 +48,9 @@ namespace Ecommerce.Data
 
                 await AddProductAsync("Nutremax - Hydromax Sport Drink Bebida Deportiva Isotonica En Pote 1,5 Kg", 50000M, 5, "Ena", new List<string>() { "Bebidas Hidratantes" }, new List<string>() { "bebida_isotonica.webp" });
                 await AddProductAsync("Star nutrition - Oxido Nítrico Steam N.O Arginina 312 Grs", 210000M, 42, "Ena", new List<string>() { "Óxido Nítrico" }, new List<string>() { "oxido_nitroso.webp" });
-                await AddProductAsync("Star nutrition - Glutamina Micronizada X 300grs", 130000M, 4, "Ena", new List<string>() { "Glutamina" }, new List<string>() { "glutamina.webp" });
+                await AddProductAsync("Star nutrition - Glutamina Micronizada X 300grs", 130000M, 4, "Ena", new List<string>() { "Glutamina" }, new List<string>() { "golNutrition.webp" });
                 await AddProductAsync("Combo Advance Whey + Creatina Xtrenght 250gr", 300000M, 1, "Ena", new List<string>() { "Combos" }, new List<string>() { "combo_suplementos.webp" });
-                await AddProductAsync("Xtrenght - Nitrogain 1.5kg Ganador De Peso", 400000M, 111, "Ena", new List<string>() { "Ganadores de Peso" }, new List<string>() { "ganador_peso.webp" });
+                await AddProductAsync("Xtrenght - Nitrogain 1.5kg Ganador De Peso", 400000M, 111, "Ena", new List<string>() { "Ganadores de Peso" }, new List<string>() { "HarcoreNutrition.png" });
                 await AddProductAsync("Que lo Paleo Caja de Barritas x 24 Unidades", 20000M, 11, "Ena", new List<string>() { "Barritas Proteicas" }, new List<string>() { "barritas_proteicas_x.webp" });
                 await AddProductAsync("Nutrex Research Series Lipo-6 Black Ultra Concentrate en pote con 60 cápsulas sin sabor", 250000M, 22, "", new List<string>() { "Quemadores de Grasa" }, new List<string>() { "quemadores.webp" });
                 await AddProductAsync("Star Nutrition - 2x1 - V8", 150000M, 12, "HTN", new List<string>() { "Energizantes" }, new List<string>() { "energizante.webp" });
