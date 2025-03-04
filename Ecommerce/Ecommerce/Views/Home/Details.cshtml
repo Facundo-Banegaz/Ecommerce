@@ -4,7 +4,6 @@
     ViewData["Title"] = "Details";
 }
 
-
 <div class="container py-5">
     <div class="row">
         <!-- Product Images Carousel -->
@@ -13,8 +12,6 @@
                 @if (Model?.ProductImages?.Count() == 1)
                 {
                     <!-- Mostrar única imagen si solo hay una -->
-
-
                     <a href="@Model.ProductImages.First().ImageFullPath" data-lightbox="image-@Model.Id" data-title="@Model.Name" data-alt="@Model.Name">
                         <img src="@Model.ProductImages.First().ImageFullPath" class="card-img-top img-fluid"
                              data-lightbox="product-gallery" data-title="@Model.Name"
@@ -52,26 +49,49 @@
                         </button>
                     </div>
                 }
-
             </div>
             <!-- Description -->
             <p class="mt-5 fs-3 fw-bold">Descripción</p>
-            <p class="mt-5 fs-4 fw-ligth">@Model?.Description</p>
-
+            <p class="mt-5 fs-4 fw-light">@Model?.Description</p>
         </div>
 
         <!-- Product Details -->
         <div class="col-md-4">
+            <!-- Nombre del producto -->
             <h2 class="h2 mb-3 fw-bold">@Model?.Name</h2>
-            <div class="mb-3">
-                <div>
-                    <small class="text-decoration-line-through text-danger fw-bold">$12.222,00</small>
-                </div>
-                <div>
-                    <span class="fs-4 fw-bold me-2">@Model?.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))</span>
-                    <span class="badge bg-primary">25% OFF</span>
-                </div>
+
+            <!-- Marca del producto -->
+            <div class="mb-3 text-muted">
+                <strong>Marca:</strong> @Model?.Brand.Name
             </div>
+
+            <div class="mb-3">
+                @if (Model?.IsPromoted == true)
+                {
+                    <div>
+                        <small class="text-decoration-line-through text-danger fw-bold">
+                            @Model?.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
+                        </small>
+                    </div>
+                    <div>
+                        <span class="fs-4 fw-bold me-2">
+                            @Model?.FinalPrice.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
+                        </span>
+                        <span class="badge bg-primary">
+                            @((Model?.DiscountPercentage).ToString("0") + "% OFF")
+                        </span>
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        <span class="fs-4 fw-bold me-2">
+                            @Model?.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
+                        </span>
+                    </div>
+                }
+            </div>
+
             <!-- Rating -->
             <div class="mb-3">
                 <div class="d-flex align-items-center">
@@ -84,8 +104,6 @@
                     </div>
                 </div>
             </div>
-
-
 
             <!-- Color Selection -->
             <div class="mb-4">
@@ -102,7 +120,7 @@
 
             <!-- Additional Info -->
             <div class="mt-4">
-                <div class="d-flex align-items-center mb-2 fw-semibold ">
+                <div class="d-flex align-items-center mb-2 fw-semibold">
                     <i class="bi bi-truck text-primary me-2"></i>
                     <span>Envío gratuito en pedidos superiores a $100.000,00</span>
                 </div>

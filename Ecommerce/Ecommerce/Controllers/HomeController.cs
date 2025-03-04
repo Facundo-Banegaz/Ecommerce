@@ -26,7 +26,8 @@ namespace Ecommerce.Controllers
             List<Product> products = await _context.Products
                 .Include(p => p.ProductImages)
                 .Include(p => p.ProductCategories)
-                .OrderBy(p => p.Description)
+                .Include(b => b.Brand)
+                .OrderBy(p => p.Name)
                 .ToListAsync();
 
             HomeViewModel model = new() { Products = products };
@@ -107,6 +108,7 @@ namespace Ecommerce.Controllers
             }
 
             Product product = await _context.Products
+                .Include(b => b.Brand)
                 .Include(p => p.ProductImages)
                 .Include(p => p.ProductCategories)
                 .ThenInclude(pc => pc.Category)

@@ -2,6 +2,7 @@
 using Ecommerce.Enums;
 using Ecommerce.Helpers;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Ecommerce.Data
 {
@@ -25,10 +26,12 @@ namespace Ecommerce.Data
             await _context.Database.EnsureCreatedAsync();
             await CheckCountriesAsync();
             await CheckCategoriesAsync();
+            await CheckBrandsAsync();
             await CheckRolesAsync();
+            await CheckProductsAsync();
             await CheckUserAsync("44134", "Facundo", "Banegaz", "facu@yopmail.com", "567 488 1156", "Calle Siempre Viva", "admin.png", UserType.Admin);
             await CheckUserAsync("33699", "Francisco", "Banegaz", "fran@yopmail.com", "154 344 6691", "Calle 25 de Mayo", "user.webp", UserType.User);
-            await CheckProductsAsync();
+  
         }
 
 
@@ -36,30 +39,44 @@ namespace Ecommerce.Data
         {
             if (!_context.Products.Any())
             {
-                await AddProductAsync("Xtrenght - Bcaa Pro En Cápsulas Nutrition De 200g", 140000M, 2, new List<string>() { "Amino / BCAA" }, new List<string>() { "aminoacidos_bcaa.webp" });
-                await AddProductAsync("Xtrenght - Best Whey de 907g Proteina con creatina", 260000M, 17, new List<string>() { "Proteínas" }, new List<string>() { "proteinabest.webp" });
-                await AddProductAsync("Xtrenght - Creatina 250grs Micronizada", 150000M, 9, new List<string>() { "Creatina" }, new List<string>() { "creatina_monohidratada.webp" });
-                await AddProductAsync("Cellucor - C4 Pre Workout X 60 Servicios", 220000M, 7, new List<string>() { "Pre Entreno" }, new List<string>() { "pre_entreno_c4.webp" });
-                await AddProductAsync("Star nutrition - Colageno Hydrolizado X210 Gr. Suplemento", 180000M, 77, new List<string>() { "Colágeno" }, new List<string>() { "colageno_hidrolizado.webp" });
-                await AddProductAsync("Star Nutri - Iron Pack Multivitamin Powder - 44 Serv - 383 Gr - Sabor Fruit Punch", 140000M, 55, new List<string>() { "Vitaminas" }, new List<string>() { "multivitaminas.webp" });
+                await AddProductAsync("Xtrenght - Bcaa Pro En Cápsulas Nutrition De 200g", 140000M, 2, "Ena", new List<string>() { "Amino / BCAA" }, new List<string>() { "aminoacidos_bcaa.webp" });
+                await AddProductAsync("Xtrenght - Best Whey de 907g Proteina con creatina", 260000M, 17, "HTN", new List<string>() { "Proteínas" }, new List<string>() { "proteinabest.webp" });
+                await AddProductAsync("Xtrenght - Creatina 250grs Micronizada", 150000M, 9, "Ena", new List<string>() { "Creatina" }, new List<string>() { "creatina_monohidratada.webp" });
+                await AddProductAsync("Cellucor - C4 Pre Workout X 60 Servicios", 220000M, 7, "Ena", new List<string>() { "Pre Entreno" }, new List<string>() { "pre_entreno_c4.webp" });
+                await AddProductAsync("Star nutrition - Colageno Hydrolizado X210 Gr. Suplemento", 180000M, 77, "Ena", new List<string>() { "Colágeno" }, new List<string>() { "colageno_hidrolizado.webp" });
+                await AddProductAsync("Star Nutri - Iron Pack Multivitamin Powder - 44 Serv - 383 Gr - Sabor Fruit Punch", 140000M, 55, "Ena", new List<string>() { "Vitaminas" }, new List<string>() { "multivitaminas.webp" });
 
-                await AddProductAsync("Nutremax - Hydromax Sport Drink Bebida Deportiva Isotonica En Pote 1,5 Kg", 50000M, 5, new List<string>() { "Bebidas Hidratantes" }, new List<string>() { "bebida_isotonica.webp" });
-                await AddProductAsync("Star nutrition - Oxido Nítrico Steam N.O Arginina 312 Grs", 210000M, 42, new List<string>() { "Óxido Nítrico" }, new List<string>() { "oxido_nitroso.webp" });
-                await AddProductAsync("Star nutrition - Glutamina Micronizada X 300grs", 130000M, 4, new List<string>() { "Glutamina" }, new List<string>() { "glutamina.webp" });
-                await AddProductAsync("Combo Advance Whey + Creatina Xtrenght 250gr", 300000M, 1, new List<string>() { "Combos" }, new List<string>() { "combo_suplementos.webp" });
-                await AddProductAsync("Xtrenght - Nitrogain 1.5kg Ganador De Peso", 400000M, 111, new List<string>() { "Ganadores de Peso" }, new List<string>() { "ganador_peso.webp" });
-                await AddProductAsync("Que lo Paleo Caja de Barritas x 24 Unidades", 20000M, 11, new List<string>() { "Barritas Proteicas" }, new List<string>() { "barritas_proteicas_x.webp" });
-                await AddProductAsync("Nutrex Research Series Lipo-6 Black Ultra Concentrate en pote con 60 cápsulas sin sabor", 250000M, 22, new List<string>() { "Quemadores de Grasa" }, new List<string>() { "quemadores.webp" });
-                await AddProductAsync("Star Nutrition - 2x1 V8", 150000M, 12, new List<string>() { "Energizantes" }, new List<string>() { "energizante.webp" });
-
-
-                await _context.SaveChangesAsync();
+                await AddProductAsync("Nutremax - Hydromax Sport Drink Bebida Deportiva Isotonica En Pote 1,5 Kg", 50000M, 5, "Ena", new List<string>() { "Bebidas Hidratantes" }, new List<string>() { "bebida_isotonica.webp" });
+                await AddProductAsync("Star nutrition - Oxido Nítrico Steam N.O Arginina 312 Grs", 210000M, 42, "Ena", new List<string>() { "Óxido Nítrico" }, new List<string>() { "oxido_nitroso.webp" });
+                await AddProductAsync("Star nutrition - Glutamina Micronizada X 300grs", 130000M, 4, "Ena", new List<string>() { "Glutamina" }, new List<string>() { "glutamina.webp" });
+                await AddProductAsync("Combo Advance Whey + Creatina Xtrenght 250gr", 300000M, 1, "Ena", new List<string>() { "Combos" }, new List<string>() { "combo_suplementos.webp" });
+                await AddProductAsync("Xtrenght - Nitrogain 1.5kg Ganador De Peso", 400000M, 111, "Ena", new List<string>() { "Ganadores de Peso" }, new List<string>() { "ganador_peso.webp" });
+                await AddProductAsync("Que lo Paleo Caja de Barritas x 24 Unidades", 20000M, 11, "Ena", new List<string>() { "Barritas Proteicas" }, new List<string>() { "barritas_proteicas_x.webp" });
+                await AddProductAsync("Nutrex Research Series Lipo-6 Black Ultra Concentrate en pote con 60 cápsulas sin sabor", 250000M, 22, "", new List<string>() { "Quemadores de Grasa" }, new List<string>() { "quemadores.webp" });
+                await AddProductAsync("Star Nutrition - 2x1 - V8", 150000M, 12, "HTN", new List<string>() { "Energizantes" }, new List<string>() { "energizante.webp" });
             }
+
+
+
+            await _context.SaveChangesAsync();
         }
+    
 
 
-        private async Task AddProductAsync(string name, decimal price, int stock, List<string> categories, List<string> images)
+
+        private async Task AddProductAsync(string name, decimal price, int stock, string brandName, List<string> categories, List<string> images)
         {
+            // 🔎 Buscar la marca en la base de datos
+            Brand? brand = await _context.Brands.FirstOrDefaultAsync(b => b.Name == brandName);
+
+            // 🚨 Validar si la marca no existe
+            if (brand == null)
+            {
+                Console.WriteLine($"⚠️ Advertencia: La marca '{brandName}' no existe en la base de datos.");
+                return; // 🔴 Evita agregar el producto si la marca no existe
+            }
+
+
             Product prodcut = new()
             {
                 TitleDescription = name,
@@ -69,6 +86,7 @@ namespace Ecommerce.Data
                 Stock = stock,
                 Estate = stock > 0,
                 IsPromoted = false,
+                Brand = brand,
                 DiscountPercentage = 0,
                 Ratings = new List<Rating>(),
                 ProductCategories = new List<ProductCategory>(),
@@ -89,8 +107,6 @@ namespace Ecommerce.Data
 
             _context.Products.Add(prodcut);
         }
-
-
 
         private async Task CheckCategoriesAsync()
         {
@@ -115,6 +131,64 @@ namespace Ecommerce.Data
             }
 
             await _context.SaveChangesAsync();
+        }
+
+        private async Task CheckBrandsAsync()
+        {
+            if (!_context.Brands.Any())
+            {
+                // Lista de marcas con sus respectivas imágenes
+                var brandsData = new List<(string Name, string Image)>
+        {
+            ("Universal Nutrition", "universal.webp"),
+            ("HTN", "htn.webp"),
+            ("Nutrex Research", "nutreReserch.webp"),
+            ("Ena", "ena.webp"),
+            ("Gold Nutrition Sport Supplements", "goldNutrition.webp"),
+            ("Hoch Sport", "HochSport.webp"),
+            ("Muscletech", "Muscletech.webp"),
+            ("Que Lo Paleó", "queLoPaleo.webp"),
+            ("Star Nutrition", "starNutrition.webp"),
+            ("BSN", "bsn.webp"),
+            ("HardCore Nutrition", "HardcoreNutrition.png"),
+            ("ADN Nutrition", "adn.webp"),
+            ("Spx Nutrition Max", "logo-spx.png")
+        };
+
+                List<Brand> brands = new();
+
+                foreach (var (name, image) in brandsData)
+                {
+                    // Verificar si la marca ya existe en la base de datos
+                    if (await _context.Brands.AnyAsync(b => b.Name == name))
+                    {
+                        continue; // Si la marca ya existe, la omitimos
+                    }
+
+                    Guid imageId = Guid.Empty; // Por defecto, si falla la subida de imagen
+
+                    try
+                    {
+                        imageId = await _blobHelper.UploadBlobAsync($"{Environment.CurrentDirectory}\\wwwroot\\images\\brands\\{image}", "brands");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error al subir la imagen {image}: {ex.Message}");
+                    }
+
+                    brands.Add(new Brand
+                    {
+                        Name = name,
+                        ImageId = imageId // Se almacena el ID de la imagen subida o Guid.Empty si falló
+                    });
+                }
+
+                if (brands.Any()) // Solo guardar si hay marcas nuevas
+                {
+                    _context.Brands.AddRange(brands);
+                    await _context.SaveChangesAsync();
+                }
+            }
         }
 
         private async Task CheckCountriesAsync()
@@ -381,17 +455,7 @@ namespace Ecommerce.Data
                         new City() { Name = "Andalgalá" },
                     }
                 },
-                new State()
-                {
-                    Name = "Misiones",
-                    Cities = new List<City>()
-                    {
-                        new City() { Name = "Posadas" },
-                        new City() { Name = "Oberá" },
-                        new City() { Name = "Eldorado" },
-                        new City() { Name = "Apóstoles" },
-                    }
-                },
+
             }
                 });
 
@@ -428,27 +492,30 @@ namespace Ecommerce.Data
                     City = _context.Cities.FirstOrDefault(),
                     UserType = userType,
                 };
-                // Solo para usuarios tipo "User"
-                if (userType == UserType.User)
+         
+                if (userType ==  UserType.Admin)
                 {
-                    // Obtener el producto con Id 1
-                    var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == 1);
+                 
+                    var product = await _context.Products.FirstOrDefaultAsync();
 
-                    // Verificar que el producto existe
                     if (product != null)
                     {
-                        // Crear la calificación para el usuario y producto
+                      
                         var rating = new Rating
                         {
-                            Value = RatingValue.Excellent, // O RatingValue.5
-                            Comment = "Excelente producto", // O puedes personalizar este comentario
+                            Value = RatingValue.Excellent, 
+                            Comment = "Excelente producto", 
                             Product = product,
                             User = user,
-                            Date = DateTime.UtcNow // Establecer la fecha de la calificación si es necesario
+                            Date = DateTime.UtcNow 
                         };
 
-                        // Agregar la calificación a la lista de calificaciones del usuario
                         user.Ratings.Add(rating);
+                    }
+                    else
+                    {
+
+                        Console.WriteLine("Producto no encontrado");
                     }
                 }
                 await _userHelper.AddUserAsync(user, "facu1234");
@@ -462,19 +529,11 @@ namespace Ecommerce.Data
             return user;
         }
 
-
-
-
-
         private async Task CheckRolesAsync()
         {
             await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
             await _userHelper.CheckRoleAsync(UserType.User.ToString());
         }
-
-
-
-
 
 
     }

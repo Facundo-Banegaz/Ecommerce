@@ -10,7 +10,6 @@ namespace Ecommerce.Data
         {
         }
 
-
         public DbSet<Country> Countries { get; set; }
 
         public DbSet<Category> Categories { get; set; }
@@ -29,7 +28,10 @@ namespace Ecommerce.Data
 
         public DbSet<Wishlist> Wishlist { get; set; }
 
-        public DbSet<Marca> Marcas { get; set; }
+        public DbSet<Brand> Brands { get; set; }
+
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -39,7 +41,7 @@ namespace Ecommerce.Data
 
             modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
 
-            modelBuilder.Entity<Marca>().HasIndex(c => c.Name).IsUnique();
+            modelBuilder.Entity<Brand>().HasIndex(c => c.Name).IsUnique();
 
 
             modelBuilder.Entity<State>().HasIndex("Name", "CountryId").IsUnique();

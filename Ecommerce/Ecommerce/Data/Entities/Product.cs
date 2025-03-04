@@ -41,8 +41,11 @@ namespace Ecommerce.Data.Entities
         [Display(Name = "En Promoción")]
         public bool IsPromoted { get; set; }
 
+        [Display(Name = "Marca")]
+        public Brand Brand { get; set; }
 
 
+        [Column(TypeName = "decimal(5,2)")]
         [Display(Name = "Descuento (%)")]
         [Range(0, 100, ErrorMessage = "El descuento debe estar entre 0 y 100.")]
         public decimal DiscountPercentage { get; set; }
@@ -78,6 +81,7 @@ namespace Ecommerce.Data.Entities
             ? $"https://localhost:7232/images/no-camera.png"
             : ProductImages.FirstOrDefault().ImageFullPath;
 
+        public ICollection<Wishlist> Wishlist { get; set; } = new List<Wishlist>();
     }
 }
 

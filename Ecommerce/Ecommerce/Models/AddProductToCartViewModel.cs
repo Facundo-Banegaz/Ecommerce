@@ -53,8 +53,7 @@ namespace Ecommerce.Models
 
 
         [Display(Name = "Calificación Promedio")]
-        public decimal AverageRating => Ratings.Any() ? (decimal)Ratings.Average(rating => (int)rating) : 0;
-
+        public decimal AverageRating => Ratings.Any() ? (decimal)Ratings.Average(r => (int)r.Value) : 0;
 
 
         [Display(Name = "Precio Final")]

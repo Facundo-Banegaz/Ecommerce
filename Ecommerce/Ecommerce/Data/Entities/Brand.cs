@@ -2,11 +2,11 @@
 
 namespace Ecommerce.Data.Entities
 {
-    public class Marca
+    public class Brand
     {
         public int Id { get; set; }
 
-        [Display(Name = "Categoría")]
+        [Display(Name = "Marca")]
         [Required(ErrorMessage = "El Campo {0} es obligatorio.")]
         [MaxLength(50, ErrorMessage = "El Campo {0} debe tener maximo {1} caractéres.")]
 
@@ -20,10 +20,10 @@ namespace Ecommerce.Data.Entities
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
             ? $"https://localhost:7232/images/no-camera.png"
-            : $"https://todoshop.blob.core.windows.net/categories/{ImageId}";
+            : $"https://todoshop.blob.core.windows.net/brands/{ImageId}";
 
 
 
-        public ICollection<ProductCategory> ProductCategories { get; set; }
+        public ICollection<Product> Product { get; set; }
     }
 }

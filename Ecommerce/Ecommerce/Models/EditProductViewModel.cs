@@ -25,7 +25,7 @@ namespace Ecommerce.Models
         [DisplayFormat(DataFormatString = "{0:N2}")]
         [Display(Name = "Inventario")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public float Stock { get; set; }
+        public int Stock { get; set; }
 
     }
 }

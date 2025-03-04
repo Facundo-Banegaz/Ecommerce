@@ -22,19 +22,46 @@
                             <img src="@item.ImageFullPath" class="img-fluid img-fixed" alt="@item.Name">
                         </div>
                         <div class="card-body text-center d-flex flex-column">
+                            <div class="mb-2 text-muted">
+                                @item.Brand.Name
+                            </div>
                             <h6 class="card-title text-dark fw-bold title-fixed">@item.Name</h6>
                             <div class="mt-auto">
                                 <div class="price-section">
-                                    <div>
-                                        <small class="text-decoration-line-through text-danger">$12.222,00</small>
-                                    </div>
-                                    <div>
-                                        <span class="text-success fw-bold">@item.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))</span>
-                                        <span class="badge bg-primary">25% OFF</span>
-                                    </div>
+                                    @if (item.IsPromoted)
+                                    {
+                                        <div>
+                                            <small class="text-decoration-line-through text-danger">
+                                                @item.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
+                                            </small>
+                                        </div>
+                                        <div>
+                                            <span class="text-success fw-bold">
+                                                @item.FinalPrice.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
+                                            </span>
+                                            <span class="badge bg-primary">
+                                                @((item.DiscountPercentage).ToString("0") + "% OFF")
+                                            </span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div>
+                                            <span class="text-success fw-bold">
+                                                @item.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
+                                            </span>
+                                        </div>
+                                    }
                                 </div>
-                                <div class="text-success fw-bold mt-2">¡Retiralo YA!</div>
-                                <div class="text-success fw-bold mt-2">Envío gratis!</div>
+
+                                @if (item.Price > 100000)
+                                {
+                                    <div class="text-success fw-bold mt-2">¡Envío gratis!</div>
+                                }
+                                else
+                                {
+                                    <div class="text-success fw-bold mt-2">¡Retiralo YA!</div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -63,7 +90,6 @@
                 </div>
             </div>
         </div>
-
     }
 </div>
 
