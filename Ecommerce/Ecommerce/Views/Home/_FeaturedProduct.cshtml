@@ -1,0 +1,52 @@
+﻿<div class="container mt-4">
+    <h1 class="h2 pt-3 text-center" style="font-weight: 600;"> Productos<span style="color: #9B5DE5;">Destacados</span></h1>
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+    @foreach (var product in Model.FeaturedProducts)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                    <img src="@product.ImageFullPath" class="card-img-top" alt="@product.Name" style="height: 280px; width: 100%; object-fit: cover;">
+
+                <div class="card-body text-center">
+                    <h5 class="card-title">@product.Name</h5>
+                        @if (product.IsPromoted)
+                        {
+                            <div>
+                                <small class="text-decoration-line-through text-danger">
+                                    @product.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
+                                </small>
+                            </div>
+                            <div>
+                                <span class="text-success fw-bold">
+                                    @product.FinalPrice.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
+                                </span>
+                                <span class="badge bg-primary">
+                                    @((product.DiscountPercentage).ToString("0") + "% OFF")
+                                </span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                <span class="text-success fw-bold">
+                                    @product.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
+                                </span>
+                            </div>
+                        }
+                </div>
+
+                    @if (product.Price > 100000)
+                    {
+                        <div class="text-success text-center fw-bold pb-2">¡Envío gratis!</div>
+                    }
+                    else
+                    {
+                        <div class="text-success text-center fw-bold pb-2">¡Retiralo YA!</div>
+                    }
+            </div>
+        </div>
+    }
+</div>
+</div>
+
+

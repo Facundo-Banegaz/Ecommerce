@@ -1,5 +1,4 @@
 ﻿using Ecommerce.Data;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,23 +9,23 @@ namespace Ecommerce.Controllers
 
         private readonly DataContext _context;
 
-        public BrandsController( DataContext context)
+        public BrandsController(DataContext context)
         {
-            
+
             _context = context;
         }
 
 
 
         // GET: BrandsController
-        public async  Task<ActionResult> Index()
+        public async Task<ActionResult> Index()
         {
             return View(await _context.Brands.ToListAsync());
         }
 
 
         // GET: BrandsController/Details/5
- 
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

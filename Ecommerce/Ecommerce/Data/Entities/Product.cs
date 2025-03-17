@@ -38,6 +38,9 @@ namespace Ecommerce.Data.Entities
         public bool Estate { get; set; } = true;
 
 
+        [Display(Name = "Producto Destacado")]
+        public bool IsFeatured { get; set; }
+
         [Display(Name = "En Promoción")]
         public bool IsPromoted { get; set; }
 

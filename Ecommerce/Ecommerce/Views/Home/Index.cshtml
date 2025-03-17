@@ -1,4 +1,5 @@
-﻿
+﻿@model Ecommerce.Models.HomeViewModel
+
     
 @{
     ViewData["Title"] = "Index";
@@ -10,8 +11,12 @@
 
     <partial name="_InformativeBanner" />
 
-    <partial name="_BrandBanner" />
 
+    <partial name="_OfferProduct" />
+
+    <partial name="_FeaturedProduct" />
+
+    <partial name="_BrandBanner" />
 
 @section Scripts {
     @{

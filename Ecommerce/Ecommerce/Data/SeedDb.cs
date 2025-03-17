@@ -2,7 +2,6 @@
 using Ecommerce.Enums;
 using Ecommerce.Helpers;
 using Microsoft.EntityFrameworkCore;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Ecommerce.Data
 {
@@ -31,7 +30,7 @@ namespace Ecommerce.Data
             await CheckProductsAsync();
             await CheckUserAsync("44134", "Facundo", "Banegaz", "facu@yopmail.com", "567 488 1156", "Calle Siempre Viva", "admin.png", UserType.Admin);
             await CheckUserAsync("33699", "Francisco", "Banegaz", "fran@yopmail.com", "154 344 6691", "Calle 25 de Mayo", "user.webp", UserType.User);
-  
+
         }
 
 
@@ -48,9 +47,9 @@ namespace Ecommerce.Data
 
                 await AddProductAsync("Nutremax - Hydromax Sport Drink Bebida Deportiva Isotonica En Pote 1,5 Kg", 50000M, 5, "Ena", new List<string>() { "Bebidas Hidratantes" }, new List<string>() { "bebida_isotonica.webp" });
                 await AddProductAsync("Star nutrition - Oxido Nítrico Steam N.O Arginina 312 Grs", 210000M, 42, "Ena", new List<string>() { "Óxido Nítrico" }, new List<string>() { "oxido_nitroso.webp" });
-                await AddProductAsync("Star nutrition - Glutamina Micronizada X 300grs", 130000M, 4, "Ena", new List<string>() { "Glutamina" }, new List<string>() { "golNutrition.webp" });
+                await AddProductAsync("Star nutrition - Glutamina Micronizada X 300grs", 130000M, 4, "Ena", new List<string>() { "Glutamina" }, new List<string>() { "startNutrition.webp" });
                 await AddProductAsync("Combo Advance Whey + Creatina Xtrenght 250gr", 300000M, 1, "Ena", new List<string>() { "Combos" }, new List<string>() { "combo_suplementos.webp" });
-                await AddProductAsync("Xtrenght - Nitrogain 1.5kg Ganador De Peso", 400000M, 111, "Ena", new List<string>() { "Ganadores de Peso" }, new List<string>() { "HarcoreNutrition.png" });
+                await AddProductAsync("Xtrenght - Nitrogain 1.5kg Ganador De Peso", 400000M, 111, "Ena", new List<string>() { "Ganadores de Peso" }, new List<string>() { "proteinabest.webp" });
                 await AddProductAsync("Que lo Paleo Caja de Barritas x 24 Unidades", 20000M, 11, "Ena", new List<string>() { "Barritas Proteicas" }, new List<string>() { "barritas_proteicas_x.webp" });
                 await AddProductAsync("Nutrex Research Series Lipo-6 Black Ultra Concentrate en pote con 60 cápsulas sin sabor", 250000M, 22, "", new List<string>() { "Quemadores de Grasa" }, new List<string>() { "quemadores.webp" });
                 await AddProductAsync("Star Nutrition - 2x1 - V8", 150000M, 12, "HTN", new List<string>() { "Energizantes" }, new List<string>() { "energizante.webp" });
@@ -60,7 +59,7 @@ namespace Ecommerce.Data
 
             await _context.SaveChangesAsync();
         }
-    
+
 
 
 
@@ -86,6 +85,7 @@ namespace Ecommerce.Data
                 Stock = stock,
                 Estate = stock > 0,
                 IsPromoted = false,
+                IsFeatured = false,
                 Brand = brand,
                 DiscountPercentage = 0,
                 Ratings = new List<Rating>(),
@@ -492,22 +492,22 @@ namespace Ecommerce.Data
                     City = _context.Cities.FirstOrDefault(),
                     UserType = userType,
                 };
-         
-                if (userType ==  UserType.Admin)
+
+                if (userType == UserType.Admin)
                 {
-                 
+
                     var product = await _context.Products.FirstOrDefaultAsync();
 
                     if (product != null)
                     {
-                      
+
                         var rating = new Rating
                         {
-                            Value = RatingValue.Excellent, 
-                            Comment = "Excelente producto", 
+                            Value = RatingValue.Excellent,
+                            Comment = "Excelente producto",
                             Product = product,
                             User = user,
-                            Date = DateTime.UtcNow 
+                            Date = DateTime.UtcNow
                         };
 
                         user.Ratings.Add(rating);

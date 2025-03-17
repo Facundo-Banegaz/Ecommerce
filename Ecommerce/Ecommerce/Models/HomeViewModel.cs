@@ -4,9 +4,10 @@ namespace Ecommerce.Models
 {
     public class HomeViewModel
     {
-        public ICollection<Product> Products { get; set; }
+        public List<Brand> Brands { get; set; }
 
-        public float Quantity { get; set; }
+        public List<Product> FeaturedProducts { get; set; }
+        public List<Product> PromotedProducts {  get; set; }
 
     }
 }

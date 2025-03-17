@@ -24,10 +24,21 @@ namespace Ecommerce.Controllers
         public async Task<IActionResult> Index()
         {
             var brands = await _context.Brands.ToListAsync();
-            return View(brands);
+        
+            var featuredProducts = await _context.Products.Include(p => p.ProductImages).Where(p => p.IsFeatured).ToListAsync(); 
+            var promotedProducts = await _context.Products.Include(p => p.ProductImages).Where(p => p.IsPromoted).ToListAsync();
 
+            var viewModel = new HomeViewModel
+            {
+                Brands = brands,
+                FeaturedProducts = featuredProducts,
+                PromotedProducts = promotedProducts
+            };
 
+            return View(viewModel);
         }
+
+
         public async Task<IActionResult> Products()
         {
             List<Product> products = await _context.Products
@@ -37,7 +48,7 @@ namespace Ecommerce.Controllers
                  .OrderBy(p => p.Name)
                  .ToListAsync();
 
-            HomeViewModel model = new() { Products = products };
+            ProductViewModel model = new() { Products = products };
             User user = await _userHelper.GetUserAsync(User.Identity.Name);
             if (user != null)
             {
@@ -114,7 +125,7 @@ namespace Ecommerce.Controllers
             }
 
             Product product = await _context.Products
-                
+
                 .Include(p => p.ProductImages)
                 .Include(p => p.ProductCategories)
                 .ThenInclude(pc => pc.Category)
@@ -148,7 +159,7 @@ namespace Ecommerce.Controllers
                 Quantity = 1,
                 Stock = product.Stock,
                 Brand = product.Brand,
-               
+
             };
 
             return View(model);
