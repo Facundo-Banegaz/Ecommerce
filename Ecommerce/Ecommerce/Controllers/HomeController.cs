@@ -23,12 +23,19 @@ namespace Ecommerce.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var brands = await _context.Brands.ToListAsync();
+            return View(brands);
+
+
+        }
+        public async Task<IActionResult> Products()
+        {
             List<Product> products = await _context.Products
-                .Include(p => p.ProductImages)
-                .Include(p => p.ProductCategories)
-                .Include(b => b.Brand)
-                .OrderBy(p => p.Name)
-                .ToListAsync();
+                 .Include(p => p.ProductImages)
+                 .Include(p => p.ProductCategories)
+                 .Include(b => b.Brand)
+                 .OrderBy(p => p.Name)
+                 .ToListAsync();
 
             HomeViewModel model = new() { Products = products };
             User user = await _userHelper.GetUserAsync(User.Identity.Name);
@@ -41,7 +48,6 @@ namespace Ecommerce.Controllers
 
             return View(model);
         }
-
         public IActionResult Contact()
         {
             return View();

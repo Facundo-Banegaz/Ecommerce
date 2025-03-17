@@ -1,97 +1,17 @@
-﻿@model Ecommerce.Models.HomeViewModel
-
+﻿
+    
 @{
     ViewData["Title"] = "Index";
 }
 
-@if (Model.Quantity > 0)
-{
-    <a asp-action="ShowCart" class="btn btn-outline-primary text-decoretion-none mt-5">Ver Carro de Compras <i class="bi bi-cart-fill"></i> (@Model.Quantity)</a>
-}
- 
 
-<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 mt-1">
-    @if (Model.Products.Count() > 0)
-    {
-        @foreach (var item in Model.Products)
-        {
-            <a asp-action="Details" asp-route-id="@item.Id" class="text-decoration-none">
-                <div class="col">
-                    <div class="card h-100 shadow-sm card-custom card-hover">
-                        <div class="text-center p-3">
-                            <img src="@item.ImageFullPath" class="img-fluid img-fixed" alt="@item.Name">
-                        </div>
-                        <div class="card-body text-center d-flex flex-column">
-                            <div class="mb-2 text-muted">
-                                @item.Brand.Name
-                            </div>
-                            <h6 class="card-title text-dark fw-bold title-fixed">@item.Name</h6>
-                            <div class="mt-auto">
-                                <div class="price-section">
-                                    @if (item.IsPromoted)
-                                    {
-                                        <div>
-                                            <small class="text-decoration-line-through text-danger">
-                                                @item.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
-                                            </small>
-                                        </div>
-                                        <div>
-                                            <span class="text-success fw-bold">
-                                                @item.FinalPrice.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
-                                            </span>
-                                            <span class="badge bg-primary">
-                                                @((item.DiscountPercentage).ToString("0") + "% OFF")
-                                            </span>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div>
-                                            <span class="text-success fw-bold">
-                                                @item.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
-                                            </span>
-                                        </div>
-                                    }
-                                </div>
 
-                                @if (item.Price > 100000)
-                                {
-                                    <div class="text-success fw-bold mt-2">¡Envío gratis!</div>
-                                }
-                                else
-                                {
-                                    <div class="text-success fw-bold mt-2">¡Retiralo YA!</div>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        }
-    }
-    else
-    {
-        <div class="col w-100 d-flex justify-content-center align-items-center">
-            <div class="card w-100 w-md-50 shadow-lg rounded-lg">
-                <div class="card-body text-center">
-                    <!-- Imagen -->
-                    <img src="~/Images/lupa.png" alt="No encontrado" class="card-img-top img-fluid mb-4"
-                         style="max-height: 250px; object-fit: contain;" />
+    <partial name="_Carousel" />
 
-                    <!-- Texto principal -->
-                    <p class="fs-4 fw-bold text-muted">No se encontraron resultados.</p>
-                    <p class="mb-4">Utiliza palabras genéricas o navega por las categorías para encontrar productos similares.</p>
+    <partial name="_InformativeBanner" />
 
-                    <!-- Sugerencia de acción -->
-                    <small class="d-block mb-4 text-muted">Te recomendamos revisar la escritura de la palabra, buscar una palabra distinta o navegar por las categorías.</small>
+    <partial name="_BrandBanner" />
 
-                    <!-- Botón de acción -->
-                    <a class="btn btn-dark btn-lg" asp-action="Index">Ir a Productos</a>
-                </div>
-            </div>
-        </div>
-    }
-</div>
 
 @section Scripts {
     @{

@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Ecommerce.Data.Entities.Brand>
+
+<div class="container mt-4">
+   
+        <h1 class="h2 my-4 text-center" style="font-weight: 600;">Nuestras Mejores <span style="color: #9B5DE5;">Marcas</span></h1>
+    <div class="row justify-content-center align-items-center">
+        @foreach (var brand in Model)
+        {
+            <div class="col-6 col-md-3 text-center">
+                <img src="@brand.ImageFullPath" class="img-fluid" alt="@brand.Name" style="max-height: 100px;">
+            </div>
+        }
+    </div>
+</div>
