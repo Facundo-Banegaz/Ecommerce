@@ -161,7 +161,7 @@ namespace Ecommerce.Controllers
                 Brand = product.Brand,
 
             };
-
+            
             return View(model);
         }
 
@@ -219,6 +219,7 @@ namespace Ecommerce.Controllers
                 User = user,
                 TemporalSales = temporalSales,
             };
+
 
             return View(model);
         }

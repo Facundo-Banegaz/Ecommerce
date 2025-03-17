@@ -1,96 +1,136 @@
 ﻿@model Ecommerce.Models.ProductViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Productos";
 }
+<div class="container pt-4 my-4">
+    <div class="d-flex justify-content-center">
+        <div class="input-group w-100">
+            <input type="text" class="form-control form-control-lg" placeholder="Buscar productos..." aria-label="Buscar productos">
+            <button class="btn btn-primary btn-lg" type="button">Buscar</button>
+        </div>
+    </div>
+</div>
 
-@if (Model.Quantity > 0)
-{
-    <a asp-action="ShowCart" class="btn btn-outline-primary text-decoretion-none mt-5">Ver Carro de Compras <i class="bi bi-cart-fill"></i> (@Model.Quantity)</a>
-}
 
-
-<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 mt-1">
-    @if (Model.Products.Count() > 0)
-    {
-        @foreach (var item in Model.Products)
-        {
-            <a asp-action="Details" asp-route-id="@item.Id" class="text-decoration-none">
-                <div class="col">
-                    <div class="card h-100 shadow-sm card-custom card-hover">
-                        <div class="text-center p-3">
-                            <img src="@item.ImageFullPath" class="img-fluid img-fixed" alt="@item.Name">
-                        </div>
-                        <div class="card-body text-center d-flex flex-column">
-                            <div class="mb-2 text-muted">
-                                @item.Brand.Name
-                            </div>
-                            <h6 class="card-title text-dark fw-bold title-fixed">@item.Name</h6>
-                            <div class="mt-auto">
-                                <div class="price-section">
-                                    @if (item.IsPromoted)
-                                    {
-                                        <div>
-                                            <small class="text-decoration-line-through text-danger">
-                                                @item.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
-                                            </small>
-                                        </div>
-                                        <div>
-                                            <span class="text-success fw-bold">
-                                                @item.FinalPrice.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
-                                            </span>
-                                            <span class="badge bg-primary">
-                                                @((item.DiscountPercentage).ToString("0") + "% OFF")
-                                            </span>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div>
-                                            <span class="text-success fw-bold">
-                                                @item.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
-                                            </span>
-                                        </div>
-                                    }
-                                </div>
-
-                                @if (item.Price > 100000)
-                                {
-                                    <div class="text-success fw-bold mt-2">¡Envío gratis!</div>
-                                }
-                                else
-                                {
-                                    <div class="text-success fw-bold mt-2">¡Retiralo YA!</div>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        }
-    }
-    else
-    {
-        <div class="col w-100 d-flex justify-content-center align-items-center">
-            <div class="card w-100 w-md-50 shadow-lg rounded-lg">
-                <div class="card-body text-center">
-                    <!-- Imagen -->
-                    <img src="~/Images/lupa.png" alt="No encontrado" class="card-img-top img-fluid mb-4"
-                         style="max-height: 250px; object-fit: contain;" />
-
-                    <!-- Texto principal -->
-                    <p class="fs-4 fw-bold text-muted">No se encontraron resultados.</p>
-                    <p class="mb-4">Utiliza palabras genéricas o navega por las categorías para encontrar productos similares.</p>
-
-                    <!-- Sugerencia de acción -->
-                    <small class="d-block mb-4 text-muted">Te recomendamos revisar la escritura de la palabra, buscar una palabra distinta o navegar por las categorías.</small>
-
-                    <!-- Botón de acción -->
-                    <a class="btn btn-dark btn-lg" asp-action="Index">Ir a Productos</a>
-                </div>
+<div class="container-fluid py-5">
+    <!-- Top Bar -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">Colección de Productos</h4>
+        <div class="d-flex gap-2 align-items-center">
+            <span class="text-muted">Ordenar por:</span>
+            <div class="dropdown">
+                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="ordenDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Más recientes
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="ordenDropdown">
+                    <li><a class="dropdown-item" href="#">Más recientes</a></li>
+                    <li><a class="dropdown-item" href="#">Menor precio</a></li>
+                    <li><a class="dropdown-item" href="#">Mayor precio</a></li>
+                    <li><a class="dropdown-item" href="#">Más vendidos</a></li>
+                </ul>
             </div>
         </div>
-    }
+    </div>
+
+    <div class="row g-4">
+        <!-- Filtros Sidebar -->
+        <div class="col-lg-3">
+            <div class="p-4 shadow-sm border rounded">
+                <h6 class="mb-3">Categorías</h6>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="electronics">
+                    <label class="form-check-label" for="electronics"> Electrónica </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="clothing">
+                    <label class="form-check-label" for="clothing"> Ropa </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="accessories">
+                    <label class="form-check-label" for="accessories"> Accesorios </label>
+                </div>
+
+                <h6 class="mt-4">Rango de Precio</h6>
+                <input type="range" class="form-range" min="0" max="100000" value="50000">
+                <div class="d-flex justify-content-between">
+                    <span class="text-muted">$0</span>
+                    <span class="text-muted">$100,000</span>
+                </div>
+
+                <button class="btn btn-outline-primary w-100 mt-3">Aplicar Filtros</button>
+            </div>
+        </div>
+
+        <!-- Productos -->
+        <div class="col-lg-9">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+                @if (Model.Products.Any())
+                {
+                    @foreach (var item in Model.Products)
+                    {
+                        <div class="col">
+                            <div class="card h-100 shadow-sm border rounded">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="text-decoration-none">
+                                    <div class="position-relative text-center p-3">
+                                        <img src="@item.ImageFullPath" class="img-fluid" alt="@item.Name">
+                                        @if (item.IsPromoted)
+                                        {
+                                            <span class="badge bg-primary position-absolute top-0 start-0 m-2">
+                                                @((item.DiscountPercentage).ToString("0") + "% OFF")
+                                            </span>
+                                        }
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h6 class="fw-bold text-dark">@item.Name</h6>
+                                        <div class="text-muted">@item.Brand.Name</div>
+                                        <div class="mt-2">
+                                            @if (item.IsPromoted)
+                                            {
+                                                <small class="text-decoration-line-through text-danger">
+                                                    @item.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
+                                                </small>
+                                                <div class="text-success fw-bold">
+                                                    @item.FinalPrice.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="text-success fw-bold">
+                                                    @item.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="mt-2">
+                                            @if (item.Price > 100000)
+                                            {
+                                                <div class="text-success fw-bold">¡Envío gratis!</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="text-warning fw-bold">¡Retiralo YA!</div>
+                                            }
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-12 d-flex justify-content-center">
+                        <div class="card w-75 shadow-lg rounded-lg text-center p-4">
+                            <img src="~/Images/lupa.png" alt="No encontrado" class="img-fluid mb-4" style="max-height: 250px; object-fit: contain;" />
+                            <h5 class="text-muted">No se encontraron productos.</h5>
+                            <p>Intenta usar términos más generales o explora nuestras categorías.</p>
+                            <a class="btn btn-dark" asp-action="Index">Ver Productos</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
