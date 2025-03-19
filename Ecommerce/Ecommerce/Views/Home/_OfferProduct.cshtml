@@ -1,14 +1,14 @@
 ﻿@model Ecommerce.Models.HomeViewModel
 
 <div class="container mt-4">
-    <h1 class="h2 pt-3 text-center" style="font-weight: 600;"> Productos<span style="color: #9B5DE5;">Promocionados</span></h1>   
+    <h1 class=" pt-3 text-center" style="font-weight: 600;"> Productos <span style="color: #9B5DE5;">Promocionados</span></h1>   
 
     <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
         @foreach (var product in Model.PromotedProducts)
         {
             <a asp-action="Details" asp-route-id="@product.Id" class="text-decoration-none">
             <div class="col">
-                <div class="card h-100 shadow-sm card-hover">
+                    <div class="card h-100 shadow-sm card-hover">
                     <img src="@product.ImageFullPath" class="card-img-top" alt="@product.Name" style="height: 320px; width: 100%; object-fit: cover;">
 
                     <div class="card-body text-center">
