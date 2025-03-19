@@ -70,7 +70,7 @@
                     @foreach (var item in Model.Products)
                     {
                         <div class="col">
-                            <div class="card h-100 shadow-sm border rounded">
+                            <div class="card h-100 shadow-sm border rounded card-hover">
                                 <a asp-action="Details" asp-route-id="@item.Id" class="text-decoration-none">
                                     <div class="position-relative text-center p-3">
                                         <img src="@item.ImageFullPath" class="img-fluid" alt="@item.Name">
