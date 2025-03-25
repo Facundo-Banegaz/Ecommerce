@@ -6,7 +6,7 @@
     <div class="row justify-content-center align-items-center ">
         @foreach (var brand in Model.Brands)
         {
-            <div class="col-6 col-md-3 text-center pb-3">
+            <div class="col-6 col-md-3 text-center pb-3" data-aos="zoom-in">
                 <img src="@brand.ImageFullPath" class="img-fluid rounded-3" alt="@brand.Name" style="max-height: 100px;">
             </div>
         }

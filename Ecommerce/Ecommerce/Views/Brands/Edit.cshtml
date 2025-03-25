@@ -1,0 +1,33 @@
+﻿@model Ecommerce.Data.Entities.Brand
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<h1>Editar</h1>
+
+<<h4>Marca</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+           
+
+            <partial name="_BrandsDetails" />
+
+            <div class="form-group mt-2">
+                <input type="submit" value="Guadar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver</a>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

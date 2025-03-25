@@ -4,7 +4,7 @@
     @foreach (var product in Model.FeaturedProducts)
     {
             <a asp-action="Details" asp-route-id="@product.Id" class="text-decoration-none">
-        <div class="col">
+        <div class="col"data-aos="zoom-in">
                     <div class="card h-100 shadow-sm card-hover">
                     <img src="@product.ImageFullPath" class="card-img-top" alt="@product.Name" style="height: 320px; width: 100%; object-fit: cover;">
 
