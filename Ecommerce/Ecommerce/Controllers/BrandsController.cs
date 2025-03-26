@@ -1,19 +1,26 @@
 ﻿using Ecommerce.Data;
+using Ecommerce.Data.Entities;
+using Ecommerce.Helpers;
+using Ecommerce.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Ecommerce.Controllers
 {
+    [Authorize(Roles= "Admin")]
     public class BrandsController : Controller
     {
 
         private readonly DataContext _context;
-
-        public BrandsController(DataContext context)
+        private readonly IBlobHelper _blobHelper;
+        public BrandsController(DataContext context, IBlobHelper blobHelper)
         {
-
             _context = context;
+            _blobHelper = blobHelper;
         }
+
 
 
 
@@ -53,22 +60,66 @@ namespace Ecommerce.Controllers
         // POST: BrandsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(BrandViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                Guid imageId = Guid.Empty;
+
+                if (model.ImageFile != null)
+                {
+                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "brands");
+                }
+
+                var brand = new Brand
+                {
+                    Name = model.Name,
+                    ImageId = imageId
+                };
+
+                try
+                {
+                    _context.Brands.Add(brand);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException?.Message.Contains("duplicate") == true)
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe una Marca con el mismo nombre.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException?.Message ?? "Error al guardar en la base de datos.");
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(model);
         }
 
+
         // GET: BrandsController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var brands = await _context.Brands.FindAsync(id);
+
+            if (brands == null)
+            {
+                return NotFound();
+            }
+
+            return View(brands);
         }
 
         // POST: BrandsController/Edit/5
@@ -105,7 +156,7 @@ namespace Ecommerce.Controllers
         }
 
         // POST: BrandsController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

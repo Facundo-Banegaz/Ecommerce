@@ -1,12 +1,13 @@
-﻿@model Ecommerce.Data.Entities.Brand
+﻿@model Ecommerce.Models.BrandViewModel
 
 <div class="form-group">
     <label asp-for="Name" class="control-label"></label>
     <input asp-for="Name" class="form-control" />
     <span asp-validation-for="Name" class="text-danger"></span>
 </div>
+
 <div class="form-group">
-    <label asp-for="ImageFullPath" class="control-label"></label>
-    <input asp-for="ImageFullPath" class="form-control" type="file" />
-    <span asp-validation-for="ImageFullPath" class="text-danger"></span>
+    <label asp-for="ImageFile" class="control-label"></label>
+    <input asp-for="ImageFile" class="form-control" type="file" />
+    <span asp-validation-for="ImageFile" class="text-danger"></span>
 </div>

@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Favorite Products";
+}
+
+<div class="container py-5">
+    <h1 class="text-center mb-4">Tus Productos Favoritos</h1>
+
+    @if (Model.Products.Count > 0)
+    {
+        <div class="row">
+            @foreach (var product in Model.Products)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name">
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">$@product.Price</p>
+                            <a href="@Url.Action("RemoveFromFavorites", "Product", new { id = product.Id })" class="btn btn-danger w-100">
+                                Eliminar de favoritos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-center">No tienes productos favoritos en este momento.</p>
+    }
+</div>

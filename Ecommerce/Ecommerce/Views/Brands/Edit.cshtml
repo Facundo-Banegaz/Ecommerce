@@ -5,8 +5,8 @@
 }
 <h1>Editar</h1>
 
-<<h4>Marca</h4>
-<hr />
+<h4>Marca</h4>
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -14,7 +14,7 @@
             <input type="hidden" asp-for="Id" />
            
 
-            <partial name="_BrandsDetails" />
+            <partial name="_Brand" />
 
             <div class="form-group mt-2">
                 <input type="submit" value="Guadar" class="btn btn-primary" />

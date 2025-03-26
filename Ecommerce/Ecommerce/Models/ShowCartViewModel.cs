@@ -13,7 +13,7 @@ namespace Ecommerce.Models
 
         public ICollection<TemporalSale> TemporalSales { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:N2}")]
+        //[DisplayFormat(DataFormatString = "{0:N2}")]
         [Display(Name = "Cantidad")]
         public float Quantity => TemporalSales == null ? 0 : TemporalSales.Sum(ts => ts.Quantity);
 
