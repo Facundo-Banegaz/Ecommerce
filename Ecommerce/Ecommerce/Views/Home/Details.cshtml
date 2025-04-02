@@ -7,7 +7,7 @@
 <div class="container py-5">
     <div class="row">
         <!-- Product Images Carousel -->
-        <div class="col-md-8 mb-4 justify-content-center align-content-center">
+        <div class="col-md-8 mb-4 justify-content-center align-content-center" data-aos="fade-right" data-aos-duration="1000">
             <div class="card">
                 @if (Model?.ProductImages?.Count() == 1)
                 {
@@ -60,7 +60,7 @@
         </div>
 
         <!-- Product Details -->
-        <div class="col-md-4">
+        <div class="col-md-4" data-aos="fade-left" data-aos-duration="1000">
             <!-- Nombre del producto -->
             <h2 class="h2 mb-3 fw-bold">@Model?.Name</h2>
 
