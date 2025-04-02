@@ -4,30 +4,46 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Crear ua Nueva Marca</h1>
+<h1 class="mb-4">Crear una Nueva Marca</h1>
 
-<h4>Marca</h4>
-
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <partial name="_Brand" />
-
-            <div class="form-group mt-2">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="card shadow-lg p-4">
+    <div class="row">
+        <!-- Vista previa de la imagen -->
+        <div class="col-md-3 text-center mb-3">
+            <img id="imagePreview" src="https://via.placeholder.com/200" class="rounded-circle shadow-lg" style="width:200px; height:200px; object-fit:cover;">
+        </div>
+        
+        <div class="col-md-6">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <partial name="_Brand" />
+                
+  
+                <div class="form-group mt-3">
+                    <input type="submit" value="Crear" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-outline-secondary">Volver</a>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Volver</a>
 </div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        document.getElementById("ImageFile").addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById("imagePreview").src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 }
+

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using static Org.BouncyCastle.Asn1.Cmp.Challenge;
 
 namespace Ecommerce.Controllers
 {
@@ -71,11 +72,17 @@ namespace Ecommerce.Controllers
                     imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "brands");
                 }
 
+               
+
+                //No entiendo que hacer aqui con el codigo ya que quiero que mi brand tenga el nombre y el imageId
                 var brand = new Brand
                 {
                     Name = model.Name,
-                    ImageId = imageId
+                    ImageId = imageId,
                 };
+
+
+
 
                 try
                 {
@@ -112,29 +119,76 @@ namespace Ecommerce.Controllers
                 return NotFound();
             }
 
-            var brands = await _context.Brands.FindAsync(id);
+            var brand = await _context.Brands.FindAsync(id);
 
-            if (brands == null)
+            if (brand == null)
             {
                 return NotFound();
             }
 
-            return View(brands);
+            // Mapeo de Brand a BrandViewModel
+            var model = new BrandViewModel
+            {
+                Id = brand.Id,  // Asegúrate de incluir el I
+                Name = brand.Name,
+                ImageId = brand.ImageId
+            };
+
+            return View(model);
+
         }
 
         // POST: BrandsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, BrandViewModel model)
         {
-            try
+            if (id != model.Id)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
+
+            if (ModelState.IsValid)
             {
-                return View();
+                try
+                {
+                    var brand = await _context.Brands.FindAsync(id); 
+
+                    if (brand == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Si el usuario sube una nueva imagen, la actualizamos
+                    if (model.ImageFile != null)
+                    {
+                        brand.ImageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "brands");
+                    }
+
+                    brand.Name = model.Name; 
+
+                    _context.Update(brand);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException?.Message.Contains("duplicate") == true)
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe una Marca con el mismo nombre.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException?.Message ?? "Error al guardar en la base de datos.");
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
             }
+
+            return View(model);
         }
 
         // GET: BrandsController/Delete/5

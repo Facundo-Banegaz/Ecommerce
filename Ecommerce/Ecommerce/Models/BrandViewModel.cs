@@ -1,11 +1,13 @@
 ﻿
+using Ecommerce.Data.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace Ecommerce.Models
 {
     public class BrandViewModel
     {
-    
+
+        public int Id { get; set; }
 
         [Display(Name = "Marca")]
         [Required(ErrorMessage = "El Campo {0} es obligatorio.")]
@@ -26,6 +28,6 @@ namespace Ecommerce.Models
 
         [Display(Name = "Image")]
         public IFormFile? ImageFile { get; set; }
-     
+        public ICollection<Product> Product { get; set; }
     }
 }
