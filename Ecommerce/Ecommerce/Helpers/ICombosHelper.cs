@@ -6,7 +6,7 @@ namespace Ecommerce.Helpers
     public interface ICombosHelper
     {
         Task<IEnumerable<SelectListItem>> GetComboCategoriesAsync();
-
+        Task<IEnumerable<SelectListItem>> GetComboBrandsAsync();
         Task<IEnumerable<SelectListItem>> GetComboCategoriesAsync(IEnumerable<Category> filter);
         Task<IEnumerable<SelectListItem>> GetComboCountriesAsync();
 

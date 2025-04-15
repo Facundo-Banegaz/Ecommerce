@@ -23,6 +23,7 @@ namespace Ecommerce.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Products
+                 .Include(b => b.Brand)
                 .Include(p => p.ProductImages)
                 .Include(p => p.ProductCategories)
                 .ThenInclude(pc => pc.Category)
@@ -35,6 +36,7 @@ namespace Ecommerce.Controllers
             CreateProductViewModel model = new()
             {
                 Categories = await _combosHelper.GetComboCategoriesAsync(),
+                Brands = await _combosHelper.GetComboBrandsAsync(),
             };
 
             return View(model);
@@ -55,10 +57,15 @@ namespace Ecommerce.Controllers
 
                 Product product = new()
                 {
-                    Description = model.Description,
                     Name = model.Name,
+                    TitleDescription = model.TitleDescription,
+                    Description = model.Description,
                     Price = model.Price,
                     Stock = model.Stock,
+                    IsFeatured = model.IsFeatured,
+                    IsPromoted = model.IsPromoted,
+                    DiscountPercentage = model.DiscountPercentage,
+                    Brand = await _context.Brands.FindAsync(model.BrandId),
                 };
 
                 product.ProductCategories = new List<ProductCategory>()

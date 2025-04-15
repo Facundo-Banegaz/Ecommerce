@@ -68,6 +68,28 @@ namespace Ecommerce.Helpers
             return list;
         }
 
+
+        public async Task<IEnumerable<SelectListItem>> GetComboBrandsAsync()
+        {
+            List<SelectListItem> list = await _context.Brands.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = $"{c.Id}"
+            })
+             .OrderBy(x => x.Text)
+             .ToListAsync();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione una Marca...]",
+                Value = "0"
+            });
+
+            return list;
+
+        }
+
+
         public async Task<IEnumerable<SelectListItem>> GetComboCitiesAsync(int stateId)
         {
 
