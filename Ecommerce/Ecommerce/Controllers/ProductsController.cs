@@ -186,6 +186,7 @@ namespace Ecommerce.Controllers
 
             Product product = await _context.Products
                 .Include(p => p.ProductImages)
+                .Include(b => b.Brand)
                 .Include(p => p.ProductCategories)
                 .ThenInclude(pc => pc.Category)
                 .FirstOrDefaultAsync(p => p.Id == id);
