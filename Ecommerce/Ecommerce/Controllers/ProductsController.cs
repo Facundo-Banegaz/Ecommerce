@@ -108,6 +108,7 @@ namespace Ecommerce.Controllers
             }
 
             model.Categories = await _combosHelper.GetComboCategoriesAsync();
+            model.Brands = await _combosHelper.GetComboBrandsAsync();
             return View(model);
         }
 
@@ -119,7 +120,9 @@ namespace Ecommerce.Controllers
                 return NotFound();
             }
 
-            Product product = await _context.Products.FindAsync(id);
+          Product product = await _context.Products.Include(b => b.Brand).FirstOrDefaultAsync(b => b.Id == id);
+
+
             if (product == null)
             {
                 return NotFound();
@@ -127,11 +130,18 @@ namespace Ecommerce.Controllers
 
             EditProductViewModel model = new()
             {
-                Description = product.Description,
+        
                 Id = product.Id,
+                TitleDescription = product.TitleDescription,
+                Description = product.Description,
                 Name = product.Name,
                 Price = product.Price,
                 Stock = product.Stock,
+                IsFeatured = product.IsFeatured,
+                IsPromoted = product.IsPromoted,
+                DiscountPercentage = product.DiscountPercentage,
+                BrandId = product.Brand.Id, 
+                Brands = await _combosHelper.GetComboBrandsAsync(),
             };
 
             return View(model);
@@ -148,11 +158,17 @@ namespace Ecommerce.Controllers
 
             try
             {
-                Product product = await _context.Products.FindAsync(model.Id);
-                product.Description = model.Description;
+                Product product = await _context.Products.Include(p => p.Brand).FirstOrDefaultAsync(p => p.Id == id);
+
                 product.Name = model.Name;
+                product.Description = model.Description;
+                product.TitleDescription = model.TitleDescription;
                 product.Price = model.Price;
                 product.Stock = model.Stock;
+                product.IsFeatured = model.IsFeatured;
+                product.IsPromoted = model.IsPromoted;
+                product.DiscountPercentage = model.DiscountPercentage;
+                product.Brand = await _context.Brands.FindAsync(model.BrandId);
                 _context.Update(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -172,7 +188,7 @@ namespace Ecommerce.Controllers
             {
                 ModelState.AddModelError(string.Empty, exception.Message);
             }
-
+            model.Brands = await _combosHelper.GetComboBrandsAsync();
             return View(model);
         }
 
@@ -387,6 +403,7 @@ namespace Ecommerce.Controllers
 
             Product product = await _context.Products
                 .Include(p => p.ProductCategories)
+                .Include(b=> b.Brand)
                 .Include(p => p.ProductImages)
                 .FirstOrDefaultAsync(p => p.Id == id);
             if (product == null)
@@ -404,6 +421,7 @@ namespace Ecommerce.Controllers
         {
             Product product = await _context.Products
                 .Include(p => p.ProductImages)
+                .Include(b => b.Brand)
                 .Include(p => p.ProductCategories)
                 .FirstOrDefaultAsync(p => p.Id == model.Id);
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Ecommerce.Data.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace Ecommerce.Models
@@ -43,6 +44,8 @@ namespace Ecommerce.Models
 
         [Display(Name = "En Promoción")]
         public bool IsPromoted { get; set; }
+
+        
 
         [Display(Name = "Marca")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una Marca.")]
