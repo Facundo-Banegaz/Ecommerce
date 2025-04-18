@@ -117,11 +117,12 @@
                 </div>
             </div>
 
-            <!-- Product Form -->
             <div class="col-md-12 mt-4">
-                <form asp-action="Details">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <!-- Formulario para agregar al carrito  -->
+                <form asp-action="Details" method="post">
                     <input type="hidden" asp-for="Id" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="form-group">
                         <label asp-for="Remarks" class="control-label"></label>
@@ -131,7 +132,7 @@
 
                     <div class="form-group">
                         <label asp-for="Quantity" class="control-label"></label>
-                        <input asp-for="Quantity" class="form-control" type="number" min="1" value="1" />
+                        <input asp-for="Quantity" class="form-control" type="number" min="1" />
                         <span asp-validation-for="Quantity" class="text-danger"></span>
                     </div>
 
@@ -139,17 +140,23 @@
                         <button type="submit" class="btn btn-primary w-100 mb-2">
                             <i class="bi bi-cart-plus me-2"></i> Agregar al Carro de Compras
                         </button>
-
-                        <a asp-action="Wishlist" class="btn btn-secondary w-100 mb-2">
-                            <i class="bi bi-heart me-2"></i> Añadir a Favoritos
-                        </a>
-
-                        <a asp-action="Products" class="btn btn-success w-100">
-                            <i class="bi bi-arrow-left-circle me-2"></i> Regresar
-                        </a>
                     </div>
                 </form>
+
+                <!-- Formulario  para agregar a favoritos -->
+                <form asp-action="AddToWishlist" method="post">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="btn btn-secondary w-100 mb-2">
+                        <i class="bi bi-heart me-2"></i> Añadir a Favoritos
+                    </button>
+                </form>
+
+                <!-- Botón para volver -->
+                <a asp-action="Products" class="btn btn-success w-100">
+                    <i class="bi bi-arrow-left-circle me-2"></i> Regresar
+                </a>
             </div>
+
         </div>
 
         <!-- Description -->

@@ -9,20 +9,31 @@
 
     @if (Model.Products.Count > 0)
     {
-        <div class="row">
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
             @foreach (var product in Model.Products)
             {
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="@product.ImageFullPath" class="card-img-top" alt="@product.Name">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">@product.Name</h5>
-                            <p class="card-text">$@product.Price</p>
+                <div class="col">
+                    <div class="card h-100 shadow-sm d-flex flex-column">
+                        <img src="@product.ImageFullPath" class="card-img-top" alt="@product.Name" style="height: 220px; object-fit: cover;">
 
-                            <form asp-action="RemoveFromFavorites" method="post" class="mt-auto">
-                                <input type="hidden" name="id" value="@product.Id" />
-                                <button type="submit" class="btn btn-danger w-100">Eliminar de favoritos</button>
-                            </form>
+                        <div class="card-body text-center d-flex flex-column flex-grow-1">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text fw-bold text-success">
+                                @product.Price.ToString("C2", new System.Globalization.CultureInfo("es-AR"))
+                            </p>
+
+                            <div class="mt-auto">
+                                <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-primary w-100 mb-2">
+                                    <i class="bi bi-eye me-2"></i> Ver Detalle
+                                </a>
+
+                                <form asp-action="RemoveFromFavorites" method="post">
+                                    <input type="hidden" name="id" value="@product.Id" />
+                                    <button type="submit" class="btn btn-danger w-100">
+                                        <i class="bi bi-x-circle me-2"></i> Eliminar de favoritos
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -35,8 +46,9 @@
             <i class="bi bi-heartbreak" style="font-size: 4rem; color: #ccc;"></i>
             <h4 class="mt-3">No tienes productos favoritos en este momento.</h4>
             <p>¡Explora el catálogo y agrega tus favoritos para tenerlos siempre a mano!</p>
-            <a class="btn btn-dark" asp-action="Index">Ver Productos</a>
+            <a class="btn btn-dark" asp-action="Products">
+                <i class="bi bi-shop-window me-2"></i> Ver Productos
+            </a>
         </div>
     }
 </div>
-

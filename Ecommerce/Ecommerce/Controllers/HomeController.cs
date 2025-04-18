@@ -111,7 +111,7 @@ namespace Ecommerce.Controllers
 
             _context.TemporalSales.Add(temporalSale);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Products));
         }
 
         //add de Wishlist
@@ -155,7 +155,7 @@ namespace Ecommerce.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToAction(nameof(ShowWishlist));
+            return RedirectToAction(nameof(Products));
         }
 
 
@@ -240,7 +240,7 @@ namespace Ecommerce.Controllers
 
             _context.TemporalSales.Add(temporalSale);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Products));
         }
 
         [Authorize]

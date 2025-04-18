@@ -1,18 +1,23 @@
 ﻿@model Ecommerce.Models.HomeViewModel
 
 <div class="container mt-4">
-    <h1 class=" pt-3 text-center" style="font-weight: 600;"> Productos <span style="color: #9B5DE5;">Promocionados</span></h1>   
+    <h1 class="pt-3 text-center" style="font-weight: 600;">
+        Productos <span style="color: #9B5DE5;">Promocionados</span>
+    </h1>
 
     <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
         @foreach (var product in Model.PromotedProducts)
         {
-            <a asp-action="Details" asp-route-id="@product.Id" class="text-decoration-none">
-                <div class="col" data-aos="zoom-in">
-                    <div class="card h-100 shadow-sm card-hover">
-                    <img src="@product.ImageFullPath" class="card-img-top" alt="@product.Name" style="height: 320px; width: 100%; object-fit: cover;">
+            <div class="col" data-aos="zoom-in">
+                <div class="card h-100 shadow-sm card-hover d-flex flex-column">
+                    <img src="@product.ImageFullPath"
+                         class="card-img-top"
+                         alt="@product.Name"
+                         style="height: 220px; width: 100%; object-fit: cover;">
 
-                    <div class="card-body text-center">
+                    <div class="card-body text-center flex-grow-1 d-flex flex-column">
                         <p class="fw-bold">@product.Name</p>
+
                         @if (product.IsPromoted)
                         {
                             <div>
@@ -37,20 +42,19 @@
                                 </span>
                             </div>
                         }
+
+                        <div class="mt-auto">
+                            <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-primary mt-3 w-100">
+                                <i class="bi bi-eye me-2"></i> Ver detalle
+                            </a>
+                        </div>
                     </div>
-                    
-                                @if (product.Price > 100000)
-                                {
-                                    <div class="text-success text-center fw-bold pb-2">¡Envío gratis!</div>
-                                }
-                                else
-                                {
-                        <div class="text-success text-center fw-bold pb-2">¡Retiralo YA!</div>
-                                }
+
+                    <div class="text-success text-center fw-bold pb-3">
+                        @(product.Price > 100000 ? "¡Envío gratis!" : "¡Retiralo YA!")
+                    </div>
                 </div>
             </div>
-            </a>
         }
     </div>
-    
 </div>
