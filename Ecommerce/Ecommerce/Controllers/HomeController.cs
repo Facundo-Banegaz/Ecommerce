@@ -90,7 +90,7 @@ namespace Ecommerce.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            Product product = await _context.Products.FindAsync(id);
+            Product product = await _context.Products.Include(b => b.Brand).FirstOrDefaultAsync(p =>p.Id== id);
             if (product == null)
             {
                 return NotFound();
@@ -112,6 +112,50 @@ namespace Ecommerce.Controllers
             _context.TemporalSales.Add(temporalSale);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        //add de Wishlist
+        public async Task<IActionResult> AddToWishlist(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Evitar duplicados
+            bool exists = await _context.Wishlist
+                .AnyAsync(w => w.Product.Id == product.Id && w.User.Id == user.Id);
+
+            if (!exists)
+            {
+                var item = new Wishlist
+                {
+                    Product = product,
+                    User = user
+                };
+
+                _context.Wishlist.Add(item);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(ShowWishlist));
         }
 
 
@@ -225,6 +269,58 @@ namespace Ecommerce.Controllers
         }
 
 
+        [Authorize]
+        public async Task<IActionResult> ShowWishlist()
+        {
+            var user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var favorites = await _context.Wishlist
+                .Include(w => w.Product)
+                .ThenInclude(p => p.ProductImages)
+                .Where(w => w.User.Id == user.Id)
+                .ToListAsync();
+
+            WishlistViewModel model = new()
+            {
+                User = user,
+                Products = favorites.Select(w => w.Product).ToList()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromFavorites(int id)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var item = await _context.Wishlist
+                .Include(w => w.Product)
+                .FirstOrDefaultAsync(w => w.Product.Id == id && w.User.Id == user.Id);
+
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            _context.Wishlist.Remove(item);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(ShowWishlist));
+        }
 
     }
 }
