@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Ecommerce.Data.Entities.Order>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light">
+                <h3 class="text-secondary">Pedidos</h3>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-hover table-striped" id="MyTable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Date)</th>
+                            <th>@Html.DisplayNameFor(model => model.User.FullName)</th>
+                            <th>@Html.DisplayNameFor(model => model.Remarks)</th>
+                            <th>@Html.DisplayNameFor(model => model.OrderStatus)</th>
+                            <th>@Html.DisplayNameFor(model => model.Lines)</th>
+                            <th>@Html.DisplayNameFor(model => model.Quantity)</th>
+                            <th>@Html.DisplayNameFor(model => model.Value)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                                <td>@Html.DisplayFor(modelItem => item.User.FullName)</td>
+                                <td>
+                                    @{
+                                        var resumen = item.Remarks?.Length > 40
+                                        ? item.Remarks.Substring(0, 40) + "..."
+                                        : item.Remarks;
+                                        var uniqueId = "collapseRemarks" + item.Id;
+                                    }
+                                    <span id="short-@item.Id">@resumen</span>
+                                    @if (item.Remarks?.Length > 40)
+                                    {
+                                        <span id="full-@item.Id" class="d-none">@item.Remarks</span>
+                                        <button class="btn btn-sm btn-link p-0" onclick="toggleRemarks('@item.Id')">Ver más</button>
+                                    }
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.OrderStatus)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Lines)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Value)</td>
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">
+                                        <i class="bi bi-info-circle"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#MyTable').DataTable({
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                aLengthMenu: [
+                    [25, 50, 100, -1],
+                    [25, 50, 100, "Todos"]
+                ]
+            });
+        });
+
+        function toggleRemarks(id) {
+            const shortSpan = document.getElementById(`short-${id}`);
+            const fullSpan = document.getElementById(`full-${id}`);
+            const button = event.target;
+
+            if (shortSpan.classList.contains('d-none')) {
+                shortSpan.classList.remove('d-none');
+                fullSpan.classList.add('d-none');
+                button.textContent = 'Ver más';
+            } else {
+                shortSpan.classList.add('d-none');
+                fullSpan.classList.remove('d-none');
+                button.textContent = 'Ver menos';
+            }
+        }
+    </script>
+}
