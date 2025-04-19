@@ -55,7 +55,7 @@ builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 builder.Services.AddScoped<IBlobHelper, BlobHelper>();
 builder.Services.AddScoped<IMailHelper, MailHelper>();
-
+builder.Services.AddScoped<IOrderHelper, OrderHelper>();
 
 
 //Se usa cada vez que se las necesita y despues se destruye cuando ya lo utilizamos

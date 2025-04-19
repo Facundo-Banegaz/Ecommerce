@@ -6,7 +6,7 @@ namespace Ecommerce.Models
     {
         public ICollection<Product> Products { get; set; }
 
-        public float Quantity { get; set; }
+        public int Quantity { get; set; }
 
     }
 }

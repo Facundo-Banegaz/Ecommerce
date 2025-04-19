@@ -85,6 +85,7 @@ namespace Ecommerce.Data.Entities
             : ProductImages.FirstOrDefault().ImageFullPath;
 
         public ICollection<Wishlist> Wishlist { get; set; } = new List<Wishlist>();
+        public ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }
 

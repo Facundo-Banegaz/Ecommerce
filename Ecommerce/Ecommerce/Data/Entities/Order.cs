@@ -3,12 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Ecommerce.Data.Entities
 {
-    public class Sale
+    public class Order
     {
         public int Id { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
-        [Display(Name = "Inventario")]
+
+        [Display(Name = "Fecha")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public DateTime Date { get; set; }
 
@@ -20,19 +21,19 @@ namespace Ecommerce.Data.Entities
 
         public OrderStatus OrderStatus { get; set; }
 
-        public ICollection<SaleDetail> SaleDetails { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:N0}")]
         [Display(Name = "Líneas")]
-        public int Lines => SaleDetails == null ? 0 : SaleDetails.Count;
+        public int Lines => OrderDetails == null ? 0 : OrderDetails.Count;
 
         [DisplayFormat(DataFormatString = "{0:N2}")]
         [Display(Name = "Cantidad")]
-        public float Quantity => SaleDetails == null ? 0 : SaleDetails.Sum(sd => sd.Quantity);
+        public float Quantity => OrderDetails == null ? 0 : OrderDetails.Sum(sd => sd.Quantity);
 
         [DisplayFormat(DataFormatString = "{0:C2}")]
         [Display(Name = "Valor")]
-        public decimal Value => SaleDetails == null ? 0 : SaleDetails.Sum(sd => sd.Value);
+        public decimal Value => OrderDetails == null ? 0 : OrderDetails.Sum(sd => sd.Value);
 
     }
 }

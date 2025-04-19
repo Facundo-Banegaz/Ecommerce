@@ -70,7 +70,7 @@ namespace Ecommerce.Models
         [Display(Name = "Cantidad")]
         [Range(0.0000001, float.MaxValue, ErrorMessage = "Debes de ingresar un valor mayor a cero en la cantidad.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public float Quantity { get; set; }
+        public int Quantity { get; set; }
 
         [DataType(DataType.MultilineText)]
 

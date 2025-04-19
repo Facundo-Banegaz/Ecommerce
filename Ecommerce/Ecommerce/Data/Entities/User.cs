@@ -52,5 +52,6 @@ namespace Ecommerce.Data.Entities
         public ICollection<Wishlist> Wishlist { get; set; } = new List<Wishlist>();
 
         public ICollection<Rating> Ratings { get; set; } = new List<Rating>();
+        public ICollection<Order> Orders { get; set; }
     }
 }
