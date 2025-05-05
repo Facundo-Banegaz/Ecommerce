@@ -14,14 +14,14 @@ namespace Ecommerce.Data.Entities
 
         public Product Product { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:N2}")]
+        [DisplayFormat(DataFormatString = "{0:N0}")]
         [Display(Name = "Cantidad")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public float Quantity { get; set; }
+        public int Quantity { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:C2}")]
         [Display(Name = "Valor")]
-        public decimal Value => Product == null ? 0 : (decimal)Quantity * Product.Price;
-
+        public decimal Value => Product == null ? 0 : Quantity * Product.Price;
     }
+
 }

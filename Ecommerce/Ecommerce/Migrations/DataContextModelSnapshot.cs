@@ -43,7 +43,7 @@ namespace Ecommerce.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Brands");
+                    b.ToTable("Brands", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.Category", b =>
@@ -64,7 +64,7 @@ namespace Ecommerce.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.City", b =>
@@ -91,7 +91,7 @@ namespace Ecommerce.Migrations
                         .IsUnique()
                         .HasFilter("[StateId] IS NOT NULL");
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.Country", b =>
@@ -112,7 +112,7 @@ namespace Ecommerce.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.Order", b =>
@@ -139,7 +139,7 @@ namespace Ecommerce.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.OrderDetail", b =>
@@ -168,7 +168,7 @@ namespace Ecommerce.Migrations
 
                     b.HasIndex("SaleId");
 
-                    b.ToTable("OrderDetails");
+                    b.ToTable("OrderDetails", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.Product", b =>
@@ -219,7 +219,7 @@ namespace Ecommerce.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.ProductCategory", b =>
@@ -244,7 +244,7 @@ namespace Ecommerce.Migrations
                         .IsUnique()
                         .HasFilter("[ProductId] IS NOT NULL AND [CategoryId] IS NOT NULL");
 
-                    b.ToTable("ProductCategories");
+                    b.ToTable("ProductCategories", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.ProductImage", b =>
@@ -265,7 +265,7 @@ namespace Ecommerce.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages");
+                    b.ToTable("ProductImages", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.Rating", b =>
@@ -298,7 +298,7 @@ namespace Ecommerce.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Ratings");
+                    b.ToTable("Ratings", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.State", b =>
@@ -325,7 +325,7 @@ namespace Ecommerce.Migrations
                         .IsUnique()
                         .HasFilter("[CountryId] IS NOT NULL");
 
-                    b.ToTable("States");
+                    b.ToTable("States", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.TemporalSale", b =>
@@ -354,7 +354,7 @@ namespace Ecommerce.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TemporalSales");
+                    b.ToTable("TemporalSales", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Entities.User", b =>
@@ -476,7 +476,7 @@ namespace Ecommerce.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Wishlist");
+                    b.ToTable("Wishlist", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

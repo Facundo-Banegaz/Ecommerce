@@ -1,9 +1,12 @@
+
 using Ecommerce.Data;
 using Ecommerce.Data.Entities;
 using Ecommerce.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using Vereyon.Web;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,8 +59,8 @@ builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 builder.Services.AddScoped<IBlobHelper, BlobHelper>();
 builder.Services.AddScoped<IMailHelper, MailHelper>();
 builder.Services.AddScoped<IOrderHelper, OrderHelper>();
-
-
+//ToastNotification
+builder.Services.AddFlashMessage();
 //Se usa cada vez que se las necesita y despues se destruye cuando ya lo utilizamos
 //builder.Services.AddScoped<SeedDb>();
 

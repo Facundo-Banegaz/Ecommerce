@@ -84,7 +84,27 @@ namespace Ecommerce.Helpers
             }
             return response;
         }
+        public async Task<Response> CancelOrderAsync(int id)
+        {
+            Order order = await _context.Orders
+                .Include(s => s.OrderDetails)
+                .ThenInclude(sd => sd.Product)
+                .FirstOrDefaultAsync(s => s.Id == id);
 
-    
+            foreach (OrderDetail saleDetail in order.OrderDetails)
+            {
+                Product product = await _context.Products.FindAsync(saleDetail.Product.Id);
+                if (product != null)
+                {
+                    product.Stock += saleDetail.Quantity;
+                }
+            }
+
+            order.OrderStatus = OrderStatus.Cancelado;
+            await _context.SaveChangesAsync();
+            return new Response { IsSuccess = true };
+        }
+
+
     }
 }

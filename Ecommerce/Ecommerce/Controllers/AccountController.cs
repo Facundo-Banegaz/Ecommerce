@@ -7,6 +7,7 @@ using Ecommerce.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Vereyon.Web;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace Ecommerce.Controllers
@@ -20,15 +21,17 @@ namespace Ecommerce.Controllers
         private readonly ICombosHelper _combosHelper;
         private readonly IBlobHelper _blobHelper;
         private readonly IMailHelper _mailHelper;
+        private readonly IFlashMessage _flashMessage;
 
         public AccountController(IUserHelper userHelper, DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper,
-            IMailHelper mailHelper)
+            IMailHelper mailHelper, IFlashMessage flashMessage)
         {
             this._userHelper = userHelper;
             this._context = context;
             this._combosHelper = combosHelper;
             this._blobHelper = blobHelper;
             this._mailHelper = mailHelper;
+            this._flashMessage = flashMessage;
         }
         public IActionResult Login()
         {
@@ -122,7 +125,7 @@ namespace Ecommerce.Controllers
 
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado.");
+                    _flashMessage.Danger(string.Empty, "Este correo ya está siendo usado.");
 
                     model.Countries = await _combosHelper.GetComboCountriesAsync();
                     model.States = await _combosHelper.GetComboStatesAsync(model.CountryId);
@@ -160,8 +163,8 @@ namespace Ecommerce.Controllers
 
                 if (response.IsSuccess)
                 {
-                    ViewBag.Message = "Las instrucciones para habilitar el usuario han sido enviadas al correo.";
-                    return View(model);
+                    _flashMessage.Info("Las instrucciones para habilitar el usuario han sido enviadas al correo.");
+                    return RedirectToAction(nameof(Login));
                 }
 
                 ModelState.AddModelError(string.Empty, response.Message);

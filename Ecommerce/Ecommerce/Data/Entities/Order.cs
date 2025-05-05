@@ -8,10 +8,9 @@ namespace Ecommerce.Data.Entities
         public int Id { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
-
         [Display(Name = "Fecha")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
 
         public User User { get; set; }
 
@@ -27,9 +26,9 @@ namespace Ecommerce.Data.Entities
         [Display(Name = "Líneas")]
         public int Lines => OrderDetails == null ? 0 : OrderDetails.Count;
 
-        [DisplayFormat(DataFormatString = "{0:N2}")]
+        [DisplayFormat(DataFormatString = "{0:N0}")]
         [Display(Name = "Cantidad")]
-        public float Quantity => OrderDetails == null ? 0 : OrderDetails.Sum(sd => sd.Quantity);
+        public int Quantity => OrderDetails == null ? 0 : OrderDetails.Sum(sd => (int)sd.Quantity);
 
         [DisplayFormat(DataFormatString = "{0:C2}")]
         [Display(Name = "Valor")]
