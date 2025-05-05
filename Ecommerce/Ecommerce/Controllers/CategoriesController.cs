@@ -3,6 +3,8 @@ using Ecommerce.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using Vereyon.Web;
 
 namespace Ecommerce.Controllers
 {
@@ -10,10 +12,12 @@ namespace Ecommerce.Controllers
     public class CategoriesController : Controller
     {
         private readonly DataContext _context;
+        private readonly IFlashMessage _flashMessage;
 
-        public CategoriesController(DataContext context)
+        public CategoriesController(DataContext context, IFlashMessage flashMessage)
         {
             _context = context;
+            this._flashMessage = flashMessage;
         }
 
 
@@ -68,16 +72,16 @@ namespace Ecommerce.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe una categoría con el mismo nombre.");
+                       _flashMessage.Danger(string.Empty, "Ya existe una categoría con el mismo nombre.");
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                       _flashMessage.Danger(string.Empty, dbUpdateException.InnerException.Message);
                     }
                 }
                 catch (Exception exception)
                 {
-                    ModelState.AddModelError(string.Empty, exception.Message);
+                   _flashMessage.Danger(string.Empty, exception.Message);
                 }
             }
             return View(category);
@@ -124,16 +128,16 @@ namespace Ecommerce.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe una Categoría con el mismo nombre.");
+                       _flashMessage.Warning(string.Empty, "Ya existe una Categoría con el mismo nombre.");
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                       _flashMessage.Danger(string.Empty, dbUpdateException.InnerException.Message);
                     }
                 }
                 catch (Exception exception)
                 {
-                    ModelState.AddModelError(string.Empty, exception.Message);
+                   _flashMessage.Danger(string.Empty, exception.Message);
                 }
 
 
@@ -171,6 +175,7 @@ namespace Ecommerce.Controllers
             }
 
             await _context.SaveChangesAsync();
+            _flashMessage.Info("Registro Borrado.");
             return RedirectToAction(nameof(Index));
         }
     }
