@@ -1,0 +1,84 @@
+﻿@model Ecommerce.Data.Entities.Order
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<flash dismissable="true" />
+
+<h1>Detalles</h1>
+
+<div>
+    <partial name="_OrderDetails" />
+</div>
+
+<div>
+    <a asp-action="MyOrders" class="btn btn-outline-success">Regresar</a>
+</div>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<hr />
+
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Productos</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped table-bordered" id="MyTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.OrderDetails.FirstOrDefault().Product.Name)</th>
+                                <th>@Html.DisplayNameFor(model => model.OrderDetails.FirstOrDefault().Remarks)</th>
+                                <th>@Html.DisplayNameFor(model => model.OrderDetails.FirstOrDefault().Product.Price)</th>
+                                <th>@Html.DisplayNameFor(model => model.OrderDetails.FirstOrDefault().Quantity)</th>
+                                <th>@Html.DisplayNameFor(model => model.OrderDetails.FirstOrDefault().Value)</th>
+                                <th>@Html.DisplayNameFor(model => model.OrderDetails.FirstOrDefault().Product.ImageFullPath)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OrderDetails)
+                            {
+                                <tr>
+                                    <td>@item.Product.Name</td>
+                                    <td>@item.Remarks</td>
+                                    <td>@item.Product.Price.ToString("C")</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.Value.ToString("C")</td>
+                                    <td>
+                                        <div class="zoom">
+                                            <img src="@item.Product.ImageFullPath" style="width:100px;" class="img-fluid rounded" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#MyTable').DataTable({
+                responsive: true,
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                aLengthMenu: [
+                    [25, 50, 100, 200, -1],
+                    [25, 50, 100, 200, "Todos"]
+                ]
+            });
+        });
+    </script>
+}

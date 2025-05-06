@@ -86,12 +86,28 @@
                         </ul>
                     </li>
                 }
+        
             </ul>
 
             <ul class="navbar-nav">
                 @if (User.Identity.IsAuthenticated)
                 {
-
+             
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="ShowCart">
+                            <i class="bi bi-cart"></i> Carrito
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Orders" asp-action="MyOrders">
+                            <i class="bi bi-receipt"></i> Mis Pedidos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="ShowWishlist">
+                            <i class="bi bi-heart"></i> Lista de Deseos
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ChangeUser">
                             <i class="bi bi-person-circle"></i> ¡Hola, @User.Identity.Name!
